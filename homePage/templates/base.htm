@@ -1,0 +1,143 @@
+
+## Mako can find this base file because it's in the settings.py -> MAKO_TEMPLATES_DIRS list
+<%inherit file="base_template.htm" />
+
+
+<%block name="head">
+<head>
+  <meta charset="UTF-8" />
+
+  <title>Hotspot</title>
+
+  <meta name="description" content="" />
+  <meta name="keywords" value="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="/static/homePage/css/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/static/homePage/css/hotspot-map-editor.css" type="text/css" />
+  <!--<link rel="stylesheet" href="/static/homePage/css/hotspot-map.min.css" type="text/css" />-->
+  <link rel="stylesheet" href="/static/homePage/css/materialize.css" type="text/css" />
+  <link rel="stylesheet" href="/static/homePage/css/tipped.css" type="text/css" />
+  <link rel="stylesheet" href="/static/homePage/css/jquery.qtip.css" type="text/css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="/static/homePage/css/screen.css" type="text/css" />
+     <style>
+#draggable1, #draggable2, #draggable3 { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
+#droppable { width: 300px; height: 300px; padding: 0.5em; float: left; margin: 10px; }
+</style>
+<script>
+
+</script>
+  <body>
+</head>
+<%block name="nav">
+  <!-- Dropdown Structure -->
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="/homePage/profile">Profile</a></li>
+    <li><a href="/homePage/index/logout">Logout</a></li>
+    <li><a href="/homePage/hotspots">Hotspots</a></li>
+  </ul>
+  <nav>
+   <div class="nav-wrapper black">
+     <div class="row">
+        <div class="col s3 offset-s1 m3 offset-m3 l3 offset-l1 grid-example"><a href="/" class="brand-logo">Tablet Ninjas</a></div>
+         <div class="col s2 offset-s10 m3 offset-m8 l3 offset-l8 grid-example">  
+          <ul id="nav-mobile" class="right">
+            %if request.user.is_authenticated():
+              <li><a class="dropdown-button" href="#!" data-activates="dropdown1">${user}<i class="fa fa-user fa-lg material-icons left"></i><i class="material-icons right">arrow_drop_down</i></a></li>
+            %else:
+                <li><a class="waves-effect waves-light btn-flat white-text modal-trigger" href="#modal2">Sign Up</a></li>
+               <li><a class="modal-trigger" href="#modal4">Login</a></li>
+            %endif    
+            <li></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!--Sign In MODAL --> 
+    <div id="modal4" class="modal">
+     <div class="modal-content">
+     <h1 style ="color: black;"> Login to Your Account </h1>
+        <form method ="POST" action = "/homePage/login">
+        <div class="row">
+          <div class="input-field col s12">
+            <label for="id_username">Username:</label><input class="form-control" id="id_username" name="username" type="text" />
+          </div>
+          <div class="input-field col s12">
+            <label for="id_password">Password:</label><input class="form-control" id="id_password" name="password" type="password" />
+          </div>
+        </div>
+         <button class="btn waves-effect waves-light grey darken-1" id="login_submit" type="submit" value ="submit" name="action">Submit
+                  </button> 
+        </form>
+      </div>
+    </div>
+
+  <!-- Create Account MODAL --> 
+    <div id="modal2" class="modal">
+     <div class="modal-content">
+      <h1 style ="color: black;"> Create Account </h1>
+        <form method ="POST" id="create_form" action = "/homePage/create_user">
+         <div class="input-field col s12">
+          <tr><th><label for="id_username">Username:</label></th><td><input class="form-control" id="id_create_username" name="username" type="text" /></td></tr>
+        </div>
+         <div class="input-field col s12">
+<tr><th><label for="id_email">Email:</label></th><td><input class="form-control" id="id_email" name="email" type="text" /></td></tr>
+        </div>
+         <div class="input-field col s12">
+
+<tr><th><label for="id_password">Password:</label></th><td><input class="form-control" id="id_create_password" name="password" type="password" /></td></tr>
+        </div>
+         <div class="input-field col s12">
+<tr><th><label for="id_retypepassword">Re-Enter Password:</label></th><td><input class="form-control" id="id_retypepassword" name="retypepassword" type="password" /></td></tr>
+        </div>
+          <button class="btn waves-effect waves-light grey darken-1" id="create_user_submit" type="submit" name="action">Submit
+         </button> 
+        </form>
+      </div>
+    </div>
+</%block>
+</%block>
+
+  <%block name="content">
+ 
+  </%block>
+
+<%block name="footer">
+<!--
+<footer class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text">Footer Content</h5>
+        <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <h5 class="white-text">Links</h5>
+        <ul>
+          <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+          <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+          <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+          <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+    <%! import datetime %>
+      &copy; ${datetime.datetime.year} AssyrianProject
+    <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+    </div>
+  </div>
+</footer>
+-->
+ <script src="/static/homePage/js/lib/modernizr-2.min.js"> </script>
+  <script src="/static/homePage/js/materialize.js"> </script>
+   <script src="/static/homePage/js/tipped.js"> </script>
+   <script src="/static/homePage/js/jquery.qtip.js"> </script>
+   <script src="/static/homePage/js/login-check.js"></script>
+</body>
+</%block>

@@ -1,0 +1,231 @@
+<%inherit file="base_template.htm" />
+
+<%block name="header">
+	
+</%block>
+<%block name="content">
+<!-- WRAPPER -->
+		<div id="wrapper">
+
+			<!-- PAGE TITLE -->
+			<header id="page-title"> <!-- style="background-image:url('../assets/images/demo/parallax_bg.jpg')" -->
+				<!--
+					Enable only if bright background image used
+					<span class="overlay"></span>
+				-->
+
+				<div class="container">
+					<h1>Profile</h1>
+
+					<ul class="breadcrumb">
+						<li><a href="http://localhost:8000/">Home</a></li>
+						<li class="active">Profile</li>
+					</ul>
+				</div>
+			</header>
+
+
+			<section class="container">
+
+				<div class="row">
+
+					<aside class="col-md-3">
+
+						<ul class="nav nav-list">
+							<li><a href="shortcodes-rows.html"><i class="fa fa-circle-o"></i> Groups</a></li>
+							<li><a href="shortcodes-counters.html"><i class="fa fa-circle-o"></i> Create Group</a></li>
+							<li><a href="shortcodes-toggles.html"><i class="fa fa-circle-o"></i> Find Group</a></li>
+							<li><a href="shortcodes-forms.html"><i class="fa fa-circle-o"></i> Edit Profile</a></li>
+							<li><a href="shortcodes-editor.html"><i class="fa fa-circle-o"></i><span class="label label-warning pull-right">New</span> Your History</a></li>
+							<!--<li><a href="shortcodes-buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
+							<li><a href="shortcodes-tabs-and-accordions.html"><i class="fa fa-circle-o"></i> Tabs &amp; Accordions</a></li>
+							<li><a href="shortcodes-callouts.html"><i class="fa fa-circle-o"></i> Callouts</a></li>
+							<li><a href="shortcodes-dividers.html"><i class="fa fa-circle-o"></i> Dividers</a></li>
+							<li><a href="shortcodes-lightbox.html"><i class="fa fa-circle-o"></i> Lightbox</a></li>
+							<li><a href="shortcodes-icons-and-boxes.html"><i class="fa fa-circle-o"></i> Icons &amp; Boxes</a></li>
+							<li><a href="shortcodes-carousel.html"><i class="fa fa-circle-o"></i> Carousel</a></li>
+							<li><a href="shortcodes-progress-bars.html"><i class="fa fa-circle-o"></i> Progress Bars</a></li>
+							<li><a href="shortcodes-alerts.html"><i class="fa fa-circle-o"></i> Alerts</a></li>
+							<li><a href="shortcodes-video.html"><i class="fa fa-circle-o"></i> Video</a></li>
+							<li><a href="shortcodes-tooltips-and-popover.html"><i class="fa fa-circle-o"></i> Tooltips &amp; Popover</a></li>
+							<li><a href="shortcodes-modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
+							-->
+						</ul>
+
+					</aside>
+
+					<div class="col-md-9">
+
+						<h2><strong>${request.user}&#39;s</strong> <small class="font300">Profile</small></h2>
+
+						<!-- WHITE ROWS -->
+						<div class="white-row">
+							<h3><strong>Goals</h3>
+							
+							<!--Counters-->
+							<section class="paddings white-row">
+								<div class="row text-center countTo">
+									<div class="col-md-4">
+										%if runs != 'False':
+										%for i in runs:
+											<strong data-to=${i.totalDistance}></strong>
+										%endfor
+										%else:
+										<strong data-to="0">0</strong>
+										%endif
+										<label>Miles Run</label>
+									</div>
+									<div class="col-md-4">
+										<strong data-to="67">0</strong>
+										<label>lbs Lost</label>
+									</div>
+									<div class="col-md-4">
+										<strong data-to="32">0</strong>
+										<label>Groups</label>
+									</div>
+								</div>
+							</section>
+						</div>
+
+						<div class="row">
+
+							<div class="col-md-6">
+								<div class="white-row">
+									<h2><strong>Progress</h2>
+									
+										<!--Progress Bars-->
+										<div class="progress-bars">
+										<div class="progress-label">
+											<span>Muscle Gain</span>
+										</div>
+										<div class="progress progress-striped">
+											<div class="progress-bar progress-bar-primary" data-appear-progress-animation="100%">
+												<span class="progress-bar-tooltip">100%</span>
+											</div>
+										</div>
+										<div class="progress-label">
+											<span>Weight Loss</span>
+										</div>
+										<div class="progress progress-striped">
+											<div class="progress-bar progress-bar-warning" data-appear-progress-animation="75%" data-appear-animation-delay="300">
+												<span class="progress-bar-tooltip">86%</span>
+											</div>
+										</div>
+										<div class="progress-label">
+											<span>Bench Press</span>
+										</div>
+										<div class="progress progress-striped">
+											<div class="progress-bar progress-bar-danger" data-appear-progress-animation="0%" data-appear-animation-delay="600">
+												<span class="progress-bar-tooltip">69%</span>
+											</div>
+										</div>
+										<div class="progress-label">
+											<span>Group: Rick Grimes</span>
+										</div>
+										<div class="progress progress-striped">
+											<div class="progress-bar progress-bar-info" data-appear-progress-animation="0%" data-appear-animation-delay="900">
+												<span class="progress-bar-tooltip">96%</span>
+											</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+							<div class="col-md-6">
+								<div class="white-row">
+									<h2><strong>${request.user}&#39;s</strong> Info</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="row">
+
+							<div class="col-md-4">
+								<div class="white-row">
+									<h2><strong>White</strong> Row</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="white-row">
+									<h2><strong>White</strong> Row</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="white-row">
+									<h2><strong>White</strong> Row</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="row">
+
+							<div class="col-md-3">
+								<div class="white-row">
+									<h2><strong>White</strong> Row</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="white-row">
+									<h2><strong>White</strong> Row</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="white-row">
+									<h2><strong>White</strong> Row</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="white-row">
+									<h2><strong>White</strong> Row</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+								</div>
+							</div>
+
+						</div>
+
+						<!-- /WHITE ROWS -->
+
+
+						<h3>Color Rows</h3>
+						<div class="white-row styleBackground">
+							<h3><strong>Style Background</strong> Row</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+						</div>
+
+
+						<div class="white-row styleSecondBackground">
+							<h3><strong>Style Second Background</strong> Row</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+						</div>
+
+					</div>
+
+				</div>
+
+
+			</section>
+
+
+		</div>
+		<!-- /WRAPPER -->
+</%block>
+
+<%block name="footer">
+
+</%block>

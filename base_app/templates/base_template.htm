@@ -1,0 +1,37 @@
+## this is the skeleton of all pages on our site - it defines the basic structure with our menus, sidebars, etc.
+## by naming this file with .htm, it can't be viewed directly (urls.py only allows full .html)
+
+## set up a StaticRenderer object to enable the CSS/JS automatic inclusion magic.
+<%! from base_app import static_files %>
+<%  static_renderer = static_files.StaticRenderer(self) %>
+<!DOCTYPE html>
+<html>
+  <meta charset="UTF-8">
+  <%block name ='head'>
+  <head>
+    <title>
+    Assyrian Project
+    </title>
+    
+    <!-- Meta -->
+    ## render the css
+    ${ static_renderer.get_template_css(request, context)  } 
+  <%! import datetime %>
+  </%block>
+<%block name ='header'>
+
+</%block>
+
+<%block name ='content'>
+    
+</%block>
+<%block name ='footer'>
+    
+</%block>
+
+</body>
+      
+</html>
+
+  ## render the js
+${ static_renderer.get_template_js(request, context)  }

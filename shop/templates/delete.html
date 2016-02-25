@@ -1,0 +1,28 @@
+## Mako can find this base file because it's in the settings.py -> MAKO_TEMPLATES_DIRS list
+<%inherit file="base_template.htm" />
+<%block name="content">
+<div class="row">
+<p></p>
+</div>
+<div class="row">
+<p></p>
+</div>
+<div class="row">
+<p></p>
+</div>
+<div class="row">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-5">
+  	<form method="POST">
+	<table>
+	<h1>You have been logged out</h1>
+		<tbody>
+		</tbody>
+	</table>
+	<a class='btn btn-info' href='/Manager/logout/'>ok</a>
+	
+	</form>
+  </div>
+</div>
+</%block>

@@ -1,0 +1,62 @@
+ <%inherit file="base.htm" />
+<%block name="content">
+<center><h1>How to Identify Hotspots</h1>
+   <div class = "row">
+
+<!-- Update the path to raphael js -->
+
+
+<style type='text/css'>
+svg {
+    border: solid 1px #000;
+}
+</style>
+
+<div >
+
+
+</div>
+
+
+
+
+
+
+
+  <!-- Block to Show Animation -->
+    <div class="col s12 m12 l12" >
+      <div id="raphael">
+        <div class="card large">
+            <div class="card-image">
+              <img id = "animate_img" src ="/static/homePage/images/Line.jpeg" > 
+            </div>
+            <div class="card-content">
+              The most important part is creating the hotspots for each character. 
+            </div>
+            <div class="card-action">
+               <a class="animate waves-effect waves-teal btn-flat">Animate</a>
+            </div>
+        </div>
+        <div id="raphaelContainer">
+        </div>
+      </div>
+    </div>
+ 
+
+<div id="modal_continue" class="modal">
+    <div class="modal-content">
+      <p>Congratulations! Now that you have the basic concept down, we are going to take it up a notch.  </p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Let&#8217;s Go!</a>
+    </div>
+  </div>
+
+
+
+<script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/raphael/1.5.2/raphael-min.js"></script>
+<script type='text/javascript'
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script src="/static/homePage/js/tutorial3.js"></script>
+
+</%block>

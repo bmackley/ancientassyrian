@@ -1,0 +1,35 @@
+## Mako can find this base file because it's in the settings.py -> MAKO_TEMPLATES_DIRS list
+
+<%inherit file="base_template.htm" />
+
+<%block name="content">
+
+<div id="wrapper">
+<!-- PAGE TITLE -->
+			<header id="page-title">
+				<div class="container">
+					<h1>Create Group</h1>
+
+					<ul class="breadcrumb">
+						<li><a href="http://localhost:8000/">Home</a></li>
+						<!--need a general user page-->
+						<li><a href="#">User</a></li>
+						<li class="active">Create Group</li>
+					</ul>
+				</div>
+			</header>
+
+<div class="jumbotron">
+<center>
+	<form method="POST">
+	<table>
+		<tbody>
+			${ form }
+		</tbody>
+	</table>
+<input class="btn btn-primary" type="submit" value="Submit" /> 
+</center>
+</div>
+
+
+</%block>

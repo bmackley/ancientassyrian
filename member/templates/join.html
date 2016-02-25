@@ -1,0 +1,23 @@
+## Mako can find this base file because it's in the settings.py -> MAKO_TEMPLATES_DIRS list
+<%inherit file="base_template.htm" />
+
+<%block name="content">
+%if userLoggedIn == True:
+	<script>
+		$(function(){
+			$('body').loadmodal({
+				id: 'login_modal',
+				title: 'Login',
+				url: '/member/login/',
+			});
+			
+		});
+	</script>
+%endif
+<div class="row">
+  <div class="col-md-4">
+  	<h1>Thank you for joining ____insert group name___  </h1>
+ </div>
+ <div><a href="/member/userGroup/" >Go to my groups</a></div>
+ <div><a href="/" >Go to the homePage</a></div>
+</%block>  

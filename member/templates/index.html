@@ -1,0 +1,55 @@
+ <%inherit file="base_template.htm" />
+
+
+
+<%block name="content">
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<div class="row">
+  <div class="col-md-3"> 
+	<a class='btn btn-primary' href='/member/userGroup'>Back to group</a>
+  </div>
+  <div class="col-md-9">
+    <form method="POST">
+      <table>
+        <tbody>
+          ${ form }
+        </tbody>
+      </table>
+      <input class="btn btn-primary" type="submit" value="Submit" /> 
+    </form>
+  </div>
+  <div class="col-md-12">
+	<table class= "table table-striped table-hover">
+		%if weights:
+			<thead>
+				<tr>
+					<th>Weight</th>
+					<th>Date</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				%for user in weights:
+					<tr>
+						<td>${user.weight}</td>
+						<td>${user.dateWeighed.strftime("%d %B %Y")}</td>
+					</tr>
+				%endfor
+		%endif
+			</tbody>
+	</table>
+</div>
+</div>
+
+
+</%block>
+

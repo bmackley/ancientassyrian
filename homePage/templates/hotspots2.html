@@ -1,0 +1,191 @@
+ <%inherit file="base.htm" />
+
+
+<!DOCTYPE html>
+ <html lang="en" class="no-js">
+  <meta charset="UTF-8" />
+
+  <title>Hotspot</title>
+
+  <meta name="description" content="" />
+  <meta name="keywords" value="" />
+
+  <link rel="stylesheet" href="/static/homePage/css/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/static/homePage/css/hotspot-map-editor.css" type="text/css" />
+  <!--Minify file above for production
+  <link rel="stylesheet" href="/static/homePage/css/hotspot-map.min.css" type="text/css" /> 
+  -->
+  <link rel="stylesheet" href="/static/homePage/css/lib/colorpicker.css" type="text/css" />
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+  <script src="/static/homePage/js/lib/modernizr-2.min.js"> </script>
+
+</head>
+<body>
+<%block name="content">
+%if identifiedChars == 'no characters':
+  <hr>
+%else:
+  %for i in identifiedChars:
+  <a class = "hotspotInfo" id = ${i.id}
+  data-id = ${i.id}
+  data-x = ${i.hotspot_x}
+  data-y = ${i.hotspot_y}
+  data-width = ${i.hotspot_width}
+  data-height = ${i.hotspot_height}
+  %if i.sign is None:
+    data-sign = 'None'
+  %else:
+    data-sign = ${i.sign.filepath}
+  %endif
+  > </a>
+  %endfor
+%endif
+</div>
+%if request.user.is_authenticated():
+  <center><h3>Tag characters and match the correct sign to the character. </h3></center>
+<!--
+<div class="row">
+      <div class="col col s2 offset-s10"><i class="fa fa-angle-right fa-5x"></i>
+-->
+</div>
+</div>
+<div id="shell" data-username=${request.user}>
+  <div id="hb-shell">
+  <!--
+    <div id="hb-top-wrap" class="hb-main-wrap">
+      <div id="hb-global-settings-wrap">
+        <h1>Global Settings</h1>
+        <table>
+          <tr>
+            <td width="100">Show tooltips on: </td>
+            <td>
+              <select id="show-select" autocomplete="off">
+                <option value="mouseover" selected>Mouseover</option>
+                <option value="click">Click</option>
+                <option value="always">Always Visible</option>
+              </select>
+              <div class="form-help">This option determines how the user will trigger the tooltips - when he clicks on the spot, when he hovers the mouse over it, or the tooltips will be visible all the time. This is not active in the content builder.</div>
+            </td>
+          </tr>
+          <tr>
+            <td width="100">Responsive: </td>
+            <td>
+              <input type="checkbox" id="checkbox-responsive">
+              <div class="form-help">If this is checked, the widget will be as wide as it's parent, while still preserving the image ratio. If not checked, the widget's size will be as the size of the image.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id="hb-main-wrap" class="hb-main-wrap">
+      <div id="hb-settings-wrap">
+        <h2>Selected Spot Settings</h2>
+        <table>
+          <tr>
+            <td width="100">Spot visibility: </td>
+            <td>
+              <select id="visible-select">
+                <option value="visible">Visible</option>
+                <option value="invisible" selected>Invisible</option>
+              </select>
+              <div class="form-help">Determines the visibility of the spot. If set to "invisible", the user will not know that there is a spot, unless he triggers it. <br />The spot will not look the same in the final product as it looks in the content builder.</div>
+            </td>
+          </tr>
+          <tr>
+            <td width="100">Tint Color: </td>
+            <td>
+              <input type="text" id="input-tint-color">
+            </td>
+          </tr>
+          <tr>
+            <td width="100">Tooltip width: </td>
+            <td>
+              <input type="text" id="tooltip-width">
+              <input type="checkbox" id="tooltip-auto-width" checked value="Auto"><label for="tooltip-auto-width">Auto</label>
+              <div class="form-help">If you need a fixed value for the tooltip set a number in pixels (without "px") in the text field. If you don&#39;t, then check "Auto".</div>
+            </td>
+          </tr>
+          <tr>
+            <td>Popup position: </td>
+            <td>
+              <select id="position-select">
+                <option value="left" selected>Left</option>
+                <option value="right">Right</option>
+                <option value="top">Top</option>
+                <option value="bottom">Bottom</option>
+              </select>
+              <div class="form-help">Choose where you want the popup to appear, relative to the spot that it belongs to.</div>
+            </td>
+          </tr>
+          <tr>
+            <td>Content: </td>
+            <td>
+              <textarea id="content" autocomplete="off"></textarea>
+            </td>
+          </tr>
+          <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+          <tr>
+            <td>Delete?</td>
+            <td><input type="button" id="delete" value="Delete Spot"></td>
+          </tr>
+        </table>
+      </div>
+      -->
+      <div id="hb-map-wrap">
+         <img id ='Tablet' src ="/static/homePage/images/Tablets/KUG03-obv-01.jpg">
+      </div>
+      <div class="clear"></div>
+    </div>
+    
+  <!--
+    <div id="hb-bottom-wrap" class="hb-main-wrap">
+      <h1>Live Preview</h1>
+      <div id="hb-live-preview"></div>
+    </div>
+    <div id="hb-bottom-wrap" class="hb-main-wrap">
+      <div class="left">
+        <h1>HTML Code</h1>
+        <textarea id="hb-html-code" autocomplete="off"></textarea>
+      </div>
+
+      <div class="right">
+        <h1>JavaScript Code</h1>
+        <textarea id="hb-javascript-code" autocomplete="off"></textarea>
+      </div>
+      <div class="clear"></div>
+    </div>
+    -->
+  </div>
+  <div>
+    <p class = 'success'></p>
+  <div>
+  %else:
+   <div>
+    <form method="POST">
+        ${ form }
+        <div class="row">
+        <br>
+          <div class="col-md-7">
+            <input type="submit" value="Sign In" class="btn btn-cta-secondary pull-right push-bottom" data-loading-text="Loading...">
+          </div>
+        </div>
+      </form>
+    </div>
+  %endif
+</div>
+<div id = "Assyrian_sign" class = "inline" style = " bottom: 0px; background-color: black; position: fixed; width: 100%; z-index: 10000">
+  <ul class="social-icons list-inline draggable-char col-md-12 col-sm-12 col-xs-12">
+   %for object in characters:
+      <li><img id = "Sign${object.Sign.id}" data-id = ${object.Sign.id} class = "Individual_signs" src="${object.Sign}"></li>
+    %endfor
+  </ul>
+</div>
+  <script src="/static/homePage/js/lib/jquery.min.js"></script>
+<script src="/static/homePage/js/lib/colorpicker.js"></script>
+  <script src="/static/homePage/js/hotspot-map-editor.js"></script>
+  <script src="/static/homePage/js/hotspot-map.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+</body>
+
+</%block>

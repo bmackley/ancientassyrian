@@ -1,0 +1,23 @@
+
+body{
+	background: url(/static/homePage/images/homeTablet.jpeg) no-repeat center top;
+	padding-top: 5px;
+	background-attachment: relative;
+	background-position: center center;
+	min-height: 700px;
+	width: 100%;
+	height: 100%;
+    background-color: black;
+	
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: white;
+}
+

@@ -1,0 +1,60 @@
+
+<%block name="nav">
+  <!-- Dropdown Structure -->
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="/homePage/profile">Profile</a></li>
+    <li><a href="/homePage/index/logout">Logout</a></li>
+    <li><a href="/homePage/hotspots">Hotspots</a></li>
+  </ul>
+  <nav>
+   <div class="nav-wrapper black">
+     <div class="row">
+        <div class="col s3 offset-s1 m3 offset-m3 l3 offset-l1 grid-example"><a href="/" class="brand-logo">Assyrian Project</a></div>
+         <div class="col s2 offset-s10 m3 offset-m8 l3 offset-l8 grid-example">  
+          <ul id="nav-mobile" class="right">
+            %if request.user.is_authenticated():
+              <li><a class="dropdown-button" href="#!" data-activates="dropdown1">${user}<i class="fa fa-user fa-lg material-icons left"></i><i class="material-icons right">arrow_drop_down</i></a></li>
+            %else:
+               <li><a class="modal-trigger" href="#modal4">Login</a></li>
+            %endif    
+            <li></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!--Sign In MODAL --> 
+    <div id="modal4" class="modal">
+     <div class="modal-content">
+     <h1 style ="color: black;"> Login to Your Account </h1>
+        <form method ="POST" id="sign_in" action = "/homePage/login">
+        <div class="row">
+          <div class="input-field col s12">
+            <label for="id_username">Username:</label><input class="form-control" id="id_username" name="username" type="text" />
+          </div>
+          <div class="input-field col s12">
+            <label for="id_password">Password:</label><input class="form-control" id="id_password" name="password" type="password" />
+          </div>
+        </div>
+         <button class="btn waves-effect waves-light grey darken-1" id="login_submit" type="submit" value ="submit" name="action">Submit
+                  </button> 
+        </form>
+      </div>
+    </div>
+  </nav>
+</%block>
+<%block name="content">
+
+    <div class="container">
+        <center>
+         <div class="row">
+          <form class="col s12" action="/homePage/chars" method="post">
+            <div class="row">
+                ${ charForm }
+                <input type="submit" value="Submit" />
+            </div>
+          </form>
+        </div>
+        </center>
+    </div>
+</%block>

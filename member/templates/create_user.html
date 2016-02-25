@@ -1,0 +1,129 @@
+## Mako can find this base file because it's in the settings.py -> MAKO_TEMPLATES_DIRS list
+<%inherit file="base_template.htm" />
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="/static/member/scripts/create_user.js"></script>
+
+
+<%block name="content">
+		<div id="wrapper">
+
+			<div id="shop">
+
+				<!-- PAGE TITLE -->
+				<header id="page-title">
+					<div class="container">
+						<h1>Sign Up</h1>
+
+						<ul class="breadcrumb">
+							<li><a href="http://localhost:8000/">Home</a></li>
+							<li class="active">Sign Up</li>
+						</ul>
+					</div>
+				</header>
+
+
+				<section class="container">
+
+					<div class="row">
+
+						<!-- REGISTER -->
+						<div class="col-md-6">
+
+							<h2>Create A <strong>Personal Account</strong></h2>
+							<form method="POST">
+								${ form }
+	
+								<div class="row">
+								<br>
+									<div class="col-md-8">
+										<input type="submit" value="Sign Up" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+									</div>
+								</div>
+
+							</form>
+							<p><center>
+								<h3>
+									Already have an account?
+									<a href="page-signin.html">Click to Sign In</a>
+								</h3></center>
+							</p>
+						</div>
+						<!-- /REGISTER -->
+
+						<!-- WHY? -->
+						<div class="col-md-6">
+
+							<h2>Why Compete?</h2>
+
+							<div class="white-row">
+
+								<h4>Why create a CompFITition account?</h4>
+
+								
+								<ul class="list-icon check">
+									<li>Easy tracking of your progress</li>
+									<li>Get updates of your competitors progress</li>
+									<li>Trash talk the competition</li>
+									<li>Receive nutrition and fitness tips</li>
+									<li>Join as many competition groups as you want</li>
+								</ul>
+								<p>All we ask is that you put in the work...we will do the rest.</p>
+
+								<hr class="half-margins" />
+
+								<!--<p>
+									Already have an account?
+									<a href="page-signin.html">Click to Sign In</a>
+								</p>-->
+							</div>
+
+							<div class="white-row">
+								<h4>Contact Customer Support</h4>
+								<p>
+									If you are looking for more help or have a question to ask, please <a href="contact-us.html">contact us</a>.
+								</p>
+							</div>
+
+						</div>
+						<!-- /WHY? -->
+
+					</div>
+
+				</section>
+
+			</div>
+		</div>
+		<!-- /WRAPPER -->
+</%block>
+<!--
+						<!--		
+							<form class="white-row" method="post" action="#">
+
+								<!-- alert failed -->
+								<div class="alert alert-danger">
+									<i class="fa fa-frown-o"></i> 
+									<strong>Password</strong> do not match!
+								</div>
+
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-12">
+											<label>E-mail Address</label>
+											<input type="text" value="" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-6">
+											<label>Password</label>
+											<input type="password" value="" class="form-control">
+										</div>
+										<div class="col-md-6">
+											<label>Re-enter Password</label>
+											<input type="password" value="" class="form-control">
+										</div>
+									</div>
+								</div>
+							-->
+-->

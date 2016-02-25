@@ -1,0 +1,353 @@
+<%inherit file="base.htm" />
+<%block name ="content">
+  <section id="promo" class="promo section offset-header">
+          <div class="container text-center">
+            <h2 class="title">Assyrian<span class="highlight">Project</span></h2>
+                %if request.user.is_authenticated(): 
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                 <div class="row">
+                 <div class="col-md-6">
+                 <div class="row">
+                 Welcome, ${user.username}
+                <div style="center">
+                 <a href = "homePage/index/logout"> Logout </a>
+                <div class="col-md-1">  
+                <br>
+                <div class="create-form">
+                </div>
+
+                %else:
+                <br>
+                <br>
+                <br><br>
+                <br>
+                <br>
+                <p class="intro">Learn while playing games</p>
+                
+                <div class="btns">
+                    <a class="btn btn-cta-secondary"s>Sign In </a>
+                    <a class="btn btn-cta-primary" href="http://themes.3rdwavemedia.com/website-templates/devaid-free-bootstrap-theme-developers/" target="_blank">Create Account</a>
+                </div>
+                  <br>
+                <br>
+                <br>
+                <br>
+                <div class="login-form">
+                  <form method="POST">
+                    ${ form }
+                    <div class="row">
+                    <br>
+                      <div class="col-md-7">
+                        <input type="submit" value="Sign In" class="btn btn-cta-secondary pull-right push-bottom" data-loading-text="Loading...">
+                      </div>
+                    </div>
+                  </form>
+                  <form method="POST" action ="/homePage/index/1">
+                    ${ createForm }
+                    <div class="row">
+                    <br>
+                      <div class="col-md-7">
+                        <input type="submit" value="Submit" class="btn btn-cta-secondary pull-right push-bottom" data-loading-text="Loading...">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                %endif
+              </div>
+              <ul class="meta list-inline">
+                  <li><a href="http://en.wikipedia.org/wiki/Akkadian_language" target="_blank">View Wikipedia</a></li>
+              </ul><!--//meta-->
+          </div><!--//container-->
+          <div class="social-media">
+              <div class="social-media-inner container text-center">
+                  <ul class="list-inline">
+                      <li class="twitter-follow"><a href="https://twitter.com/3rdwave_themes" class="twitter-follow-button" data-show-count="false">Follow @3rdwave_themes</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?''http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                      </li><!--//twitter-follow-->
+                      <li class="twitter-tweet">
+                          <a href="https://twitter.com/share" class="twitter-share-button" data-via="3rdwave_themes" data-hashtags="bootstrap">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?''http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                      </li><!--//twitter-tweet-->
+                      <li class="facebook-like">
+                           <div class="fb-like" data-href="http://themes.3rdwavemedia.com/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+                      </li><!--//facebook-like-->
+                      <!--// Generate github buttons: https://github.com/mdo/github-buttons -->
+                      <li class="github-star"><iframe src="http://ghbtns.com/github-btn.html?user=mdo&repo=github-buttons&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe></li>
+                      <li class="github-fork"><iframe src="http://ghbtns.com/github-btn.html?user=mdo&repo=github-buttons&type=fork" allowtransparency="true" frameborder="0" scrolling="0" width="53" height="20"></iframe></li>
+                      <!--//
+                      <li class="github-follow"><iframe src="http://ghbtns.com/github-btn.html?user=mdo&type=follow&count=true"
+    allowtransparency="true" frameborder="0" scrolling="0" width="165" height="20"></iframe></li>
+                      -->
+                  </ul>
+              </div>
+          </div>
+      </section><!--//promo-->
+</%block>
+<%block name="middle">
+    <section id="about" class="about section">
+        <div class="container">
+            <h2 class="title text-center">What is Assyrian Project?</h2>
+            <p class="intro text-center">The premise of these games are to have fun while learning something cool about history.  Playing games like this brings history to life.  By playing you also help Assyriologists decode texts that have been waiting around for decades.  So pat yourself on the back and keep playing.</p>
+            <div class="row">
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-crop"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">Crop Character</h3>
+                        <p>Use the cropping tool to select the area of the character you wish to decode</p>
+                    </div><!--//content-->
+                </div><!--//item-->
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-clock-o"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">Time Race</h3>
+                        <p>See how quickly you can identify characters!</p>
+                    </div><!--//content-->
+                </div><!--//item-->
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-institution"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">UX-centred</h3>
+                        <p>Outline a benefit here. Tell users what your plugin/software can do for them. You can change the icon above to any of the 400+ <a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank">FontAwesome</a> icons available.</p>
+                    </div><!--//content-->
+                </div><!--//item-->           
+                <div class="clearfix visible-md"></div>    
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-tablet"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">Mobile-friendly</h3>
+                        <p>Outline a benefit here. Tell users what your plugin/software can do for them. You can change the icon above to any of the 400+ <a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank">FontAwesome</a> icons available.</p>
+                    </div><!--//content-->
+                </div><!--//item-->                
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-graduation-cap"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">Easy to customise</h3>
+                        <p>Outline a benefit here. Tell users what your plugin/software can do for them. You can change the icon above to any of the 400+ <a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank">FontAwesome</a> icons available.</p>
+                    </div><!--//content-->
+                </div><!--//item-->
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-coffee"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">LESS files included</h3>
+                        <p>Outline a benefit here. Tell users what your plugin/software can do for them. You can change the icon above to any of the 400+ <a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank">FontAwesome</a> icons available.</p>
+                    </div><!--//content-->
+                </div><!--//item-->               
+            </div><!--//row-->            
+        </div><!--//container-->
+    </section><!--//about-->
+	
+    <!-- ******FEATURES****** --> 
+    <section id="features" class="features section">
+        <div class="container text-center">
+            <h2 class="title">Directions</h2>
+            <ul class="feature-list list-unstyled">
+                <li><i class="fa fa-check"></i>Crop character to identify</li>
+                <li><i class="fa fa-check"></i> Drag the matching character to match beneath</li>
+            </ul>
+        </div><!--//container-->
+    </section><!--//features-->
+    <section id="license" >
+                   </div><!--//info-->
+                   <div class="cta-container">
+					   
+					   <div id="shell"><!--Begin Editor---------------------------------->
+
+					   	<div id="hb-shell">
+					   		<div id="hb-top-wrap" class="hb-main-wrap">
+					   			<div id="hb-global-settings-wrap">
+					   				<h1>Global Settings</h1>
+					   				<table>
+					   					<tr>
+					   						<td width="100">Show tooltips on: </td>
+					   						<td>
+					   							<select id="show-select" autocomplete="off">
+					   								<option value="mouseover" selected>Mouseover</option>
+					   								<option value="click">Click</option>
+					   								<option value="always">Always Visible</option>
+					   							</select>
+					   							<div class="form-help">This option determines how the user will trigger the tooltips - when he clicks on the spot, when he hovers the mouse over it, or the tooltips will be visible all the time. This is not active in the content builder.</div>
+					   						</td>
+					   					</tr>
+					   					<tr>
+					   						<td width="100">Responsive: </td>
+					   						<td>
+					   							<input type="checkbox" id="checkbox-responsive">
+					   							<div class="form-help">If this is checked, the widget will be as wide as it's parent, while still preserving the image ratio. If not checked, the widget's size will be as the size of the image.</div>
+					   						</td>
+					   					</tr>
+					   				</table>
+					   			</div>
+					   		</div>
+					   		<div id="hb-main-wrap" class="hb-main-wrap">
+					   			<div id="hb-settings-wrap">
+					   				<h2>Selected Spot Settings</h2>
+					   				<table>
+					   					<tr>
+					   						<td width="100">Spot visibility: </td>
+					   						<td>
+					   							<select id="visible-select">
+					   								<option value="visible">Visible</option>
+					   								<option value="invisible" selected>Invisible</option>
+					   							</select>
+					   							<div class="form-help">Determines the visibility of the spot. If set to "invisible", the user will not know that there is a spot, unless he triggers it. <br />The spot will not look the same in the final product as it looks in the content builder.</div>
+					   						</td>
+					   					</tr>
+					   					<tr>
+					   						<td width="100">Tint Color: </td>
+					   						<td>
+					   							<input type="text" id="input-tint-color">
+					   						</td>
+					   					</tr>
+					   					<tr>
+					   						<td width="100">Tooltip width: </td>
+					   						<td>
+					   							<input type="text" id="tooltip-width">
+					   							<!-- <br /> -->
+					   							<input type="checkbox" id="tooltip-auto-width" checked value="Auto"><label for="tooltip-auto-width">Auto</label>
+					   							<div class="form-help">If you need a fixed value for the tooltip set a number in pixels (without "px") in the text field. If you dont, then check "Auto".</div>
+					   						</td>
+					   					</tr>
+					   					<tr>
+					   						<td>Popup position: </td>
+					   						<td>
+					   							<select id="position-select">
+					   								<option value="left" selected>Left</option>
+					   								<option value="right">Right</option>
+					   								<option value="top">Top</option>
+					   								<option value="bottom">Bottom</option>
+					   							</select>
+					   							<div class="form-help">Choose where you want the popup to appear, relative to the spot that it belongs to.</div>
+					   						</td>
+					   					</tr>
+					   					<tr>
+					   						<td>Content: </td>
+					   						<td>
+					   							<textarea id="content" autocomplete="off"></textarea>
+					   						</td>
+					   					</tr>
+					   					<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+					   					<tr>
+					   						<td>Delete?</td>
+					   						<td><input type="button" id="delete" value="Delete Spot"></td>
+					   					</tr>
+					   				</table>
+					   			</div>
+					   			<div id="hb-map-wrap" style="width: 200px; height: 200px;">
+                  <!--
+					   				<img src="/static/homePage/images/VS_26_47.png" style="opacity: .1">
+                    -->
+					   			</div>
+					   			<div class="clear"></div>
+					   		</div>
+					   		<div class="hb-main-wrap" id="submit-wrap">
+					   			<div id="result" class="ndd-button-green-regular">Generate</div>
+					   		</div>
+					   		<div id="hb-bottom-wrap" class="hb-main-wrap">
+					   			<h1>Live Preview</h1>
+					   			<div id="hb-live-preview"></div>
+					   		</div>
+					   		<div id="hb-bottom-wrap" class="hb-main-wrap">
+					   			<div class="left">
+					   				<h1>HTML Code</h1>
+					   				<textarea id="hb-html-code" autocomplete="off"></textarea>
+					   			</div>
+
+					   			<div class="right">
+					   				<h1>JavaScript Code</h1>
+					   				<textarea id="hb-javascript-code" autocomplete="off"></textarea>
+					   			</div>
+					   			<div class="clear"></div>
+					   		</div>
+					   	</div>
+
+
+					   </div><!--End Editor -->
+   					<div>
+   						<table border=2 width=100% height=300px>
+   							<tr id = "imageMaps">
+   								<td align=middle>Character</td>
+   								<td align=middle>Character</td>
+   								<td align=middle>Character</td>
+   								<td align=middle>Character</td>
+   								<td align=middle>Character</td>
+   								<td align=middle>Character</td>
+   								<td align=middle>Character</td>
+   								<td align=middle>Character</td>
+   								<td align=middle>Character</td>
+   								<td align=middle>Character</td>
+   								<td align=middle>Character</td>
+   								<td align=middle>Character</td>
+   							</tr>
+   							<tr>
+   								<td id = "CharTable" align=middle>Transliteration</td>
+   								<td align=middle>Transliteration</td>
+   								<td align=middle>Transliteration</td>
+   								<td align=middle>Transliteration</td>
+   								<td align=middle>Transliteration</td>
+   								<td align=middle>Transliteration</td>
+   								<td align=middle>Transliteration</td>
+   								<td align=middle>Transliteration</td>
+   								<td align=middle>Transliteration</td>
+   								<td align=middle>Transliteration</td>
+   								<td align=middle>Transliteration</td>
+   								<td align=middle>Transliteration</td>
+   							</tr>
+   						</table>
+   					</div>
+					<div>
+	                    <ul class="social-icons list-inline draggable-char">
+	                        <li ><a href="/static/homePage/images/1-01.png" download="char1"><img src ="/static/homePage/images/1-01.png" class="Assyrian-char"></a></li>
+	                        <li><a href="/static/homePage/images/1-01.png" download="char1"><img src ="/static/homePage/images/2-01.png" class="Assyrian-char"></a></li>
+	                        <li><a href="/static/homePage/images/1-01.png" download="char1"><img src ="/static/homePage/images/3-01.png" class="Assyrian-char"></a></li>
+	                        <li><a href="/static/homePage/images/1-01.png" download="char1"><img src ="/static/homePage/images/4-01.png" class="Assyrian-char"></a></li>  
+	                        <li><a href="/static/homePage/images/1-01.png" download="char1"><img src ="/static/homePage/images/5-01.png" class="Assyrian-char"></a></li>
+	                        <li><a href="/static/homePage/images/1-01.png" download="char1"><img src ="/static/homePage/images/6-01.png" class="Assyrian-char"></a></li> 
+							<li><a href="/static/homePage/images/1-01.png" download="char1"><img src ="/static/homePage/images/7-01.png" class="Assyrian-char"></a></li>
+							<li><a href="/static/homePage/images/1-01.png" download="char1"><img src ="/static/homePage/images/8-01.png" class="Assyrian-char"></a></li>
+							<li><a href="/static/homePage/images/1-01.png" download="char1"><img src ="/static/homePage/images/9-01.png" class="Assyrian-char"></a></li>
+							<li><a href="/static/homePage/images/1-01.png" download="char1"><img src ="/static/homePage/images/10-01.png" class="Assyrian-char"></a></li>
+              %for object in characters:
+                <li><img src="${object.filepath}"></li>
+              %endfor
+							
+							<li><img src="/static/homePage/images/30-01.png"></li>
+							<li><img src="/static/homePage/images/40-01.png"></li>
+							<li><img src="/static/homePage/images/50-01.png"></li>
+							<li><img src="/static/homePage/images/60-01.png"></li>
+							<li><img src="/static/homePage/images/70-01.png"></li>
+							<li><img src="/static/homePage/images/80-01.png"></li>
+							<li><img src="/static/homePage/images/90-01.png"></li>
+	                    </ul>
+					</div>
+					<div class="parentClass">
+						<a href="/static/homePage/images/1-01.png" download="char1" class="hiddenChar"><img src ="/static/homePage/images/1-01.png" class="Assyrian-char"></a>
+						<div class ="TextBoxInfo" ><a href="LINK" >Title</a></div>
+					</div>
+					<img >
+					<!-- Deprecated
+   					<div>
+   						<img src="/static/homePage/images/ugariticsyllabary.jpg">
+   					</div>
+					-->
+                   </div><!--//cta-container-->
+               </div><!--//license-inner-->
+           </div><!--//container-->
+       </section><!--//how-->
+</%block>
+
