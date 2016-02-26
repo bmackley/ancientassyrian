@@ -7,15 +7,6 @@ from . import templater
 import glob
 
 def process_request(request):
-  from django import forms
-  from django.conf import settings
-  from django.http import HttpResponse, HttpResponseRedirect, Http404
-  from django.contrib.auth import authenticate, login
-  from homePage import models as m
-  from . import templater
-  import glob
-
-def process_request(request):
   sign = m.Sign.objects.get(name = '589')
   line = 1
   new_char = m.AssyrianChar()
