@@ -45,6 +45,7 @@ class AssyrianChar(models.Model):
     line = models.PositiveSmallIntegerField(blank=True, null=True)
     positionNO = models.PositiveSmallIntegerField(blank= True, null=True)
     Sign = models.ForeignKey(Sign, related_name = "char_sign")
+    Tablet = models.ForeignKey(Tablet, related_name = "char_sign")
     note = models.TextField(blank= True, null=True)
     def __str__(self):
         return self.note
