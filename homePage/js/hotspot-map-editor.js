@@ -629,16 +629,19 @@
 		}//for
 	}//function
 	function updateHotspot() {
+		console.log('update Hotspot')
 		var username = $('#shell').data('username'); var is_old = false;
 		for (var i = 0; i < spots.length; i++){
+			console.log('spot ' + i + ' '); 
 			console.log(spots[i])
+			console.log('old spot ' + i + ' ' )
 			console.log(old_spots[i])
 			if(spots[i] != null){
 				if(spots[i].id == old_spots[i].id){
 					//check if the hotspot changed at all
-					console.log('Old Spot')
-					console.log('Old SPots id: ' + old_spots[i].id + "   Old Spots x "  + old_spots[i].x + "  Old Spots y " + old_spots[i].y + "   Old Spots width "  + old_spots[i].width + "  Old Spots height " + old_spots[i].height);
-					console.log("SPots id: " + spots[i].id + "  Spots x " + spots[i].x + "  Spots y " + spots[i].y + "  Spots width " + spots[i].width + "  Spots height " + spots[i].height);
+					// console.log('Old Spot')
+					//console.log('Old SPots id: ' + old_spots[i].id + "   Old Spots x "  + old_spots[i].x + "  Old Spots y " + old_spots[i].y + "   Old Spots width "  + old_spots[i].width + "  Old Spots height " + old_spots[i].height);
+					// console.log("SPots id: " + spots[i].id + "  Spots x " + spots[i].x + "  Spots y " + spots[i].y + "  Spots width " + spots[i].width + "  Spots height " + spots[i].height);
 					if(spots[i].x != old_spots[i].x || spots[i].y != old_spots[i].y || spots[i].width != old_spots[i].width || spots[i].height != old_spots[i].height){
 						$.ajax({
 							url: '/homePage/hotspot_ajax_form/' + 'update' + '/' + spots[i].x + '/' + spots[i].y + '/' + spots[i].height + '/' + spots[i].width + '/' + username + '/' + spots[i].database_id,
@@ -773,7 +776,11 @@ $(function () {
 				tooltip.css({ "left" : pos_left, "top" : pos_top });
 				targetObj.end_drawing();
 				spots.push(targetObj);
+				//old_spots.push(targetObj);
 				new_old_spot = new NewOldSpot(targetObj.id, targetObj.x, targetObj.y, targetObj.width, targetObj.height);
+				//old_spots.push(new_old_spot);
+				console.log("Old Spot ID" + new_old_spot.id)
+				//old_spots.push(new_old_spot);
 				//$('.hb-scale-handle, .hb-move-handle, .hb-spot, .hb-spot-object').off('.hb');
 				var username = $('#shell').data('username'); var is_old = false;
 				for(var i = 0; i < spots.length; i++){
@@ -795,7 +802,8 @@ $(function () {
 								success: function(data){
 									console.log(data.id)
 									spots[i].database_id = data.id
-								 	old_spots.push(spots[i]);
+								 	old_spots.push(new_old_spot);
+								 	console.log("HELLO THIS SHOULD HAVE WORKDED " + data.id)
 								 	$('.success').val(data)
 								 	//match the characters
 								 },
