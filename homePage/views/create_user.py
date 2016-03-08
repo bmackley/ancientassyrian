@@ -31,7 +31,7 @@ def process_request(request):
             #allows users to authenticate and to be logged in
             userN.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, userN)
-            return HttpResponseRedirect('/homePage/tutorial/')
+            return HttpResponseRedirect('/homePage/hotspots/')
     if request.urlparams[0] == "about":
         return templater.render_to_response(request, 'about.html')
 

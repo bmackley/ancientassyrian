@@ -10,6 +10,10 @@
             var form = this;
             var username = $('#id_create_username');
             var email = $('#id_email');
+            if(username.val().length > 30){
+            	alert('The username is too long.  Choose a username with 30 characters or less.')
+            	return false;
+            }
             $.ajax({
                 url: '/homePage/create_user_ajax/' + 'username' + '/' + username.val() + '/' + 'email' + '/' + email.val(),
 	        	success: function(result){callback(result, form)},
@@ -35,6 +39,10 @@
 	})
 
 	function checkPasswords(pass1, pass2){
+		if(pass1.val().length > 120){
+			alert('Password is too long.  Please shorten it to 120 characters or less.');
+			return false;
+		}
 		if(pass1.val() !== pass2.val()){
 			alert('passwords do not match')
 			return false;

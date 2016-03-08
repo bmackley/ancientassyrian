@@ -1,6 +1,7 @@
 (function ($, undefined) {
 
 	var wrap = 0, wrapOffsetX = 0, wrapOffsetY = 0, spots = new Array(), old_spots = new Array(), globals;
+	var sign_line_number = 1; var sign_objects = new Array();
 	var spotID = 0;
 	var targetObj = 0;
 	var mx = 0, my = 0, mox = 0, moy = 0, mix = 0, miy = 0, ix = 0, iy = 0, ox = 0, oy = 0, iw = 0, ih = 0;
@@ -181,6 +182,8 @@
 		deleteSpot();
 		toggle_tooltip();
 		editSpot();
+		getSigns();
+		handleChars();
 	});
 	function init() {
 		console.log('init')
@@ -529,11 +532,41 @@
 		$('#hb-live-preview').html(html);
 		$('#hb-live-preview').find('.hs-wrap').hotspot({ 'show_on' : globals.settings['show_on'], 'responsive' : globals.settings['responsive'] });
 	}
-	$(function () {
-		$('.disableHotspot').off('click').on('click', function(){
-			console.log('work my booty')
+	function getSigns(){
+		$('.Individual_signs').each(function(){
+			if(Math.floor(this.dataset.line) != sign_line_number){
+				$('#' + this.id).hide();
+			}
+			$('#line_text').html("Line " + sign_line_number)
 		})
-	});
+		$('#previous_line').on('click', function(){
+			if(sign_line_number != 1){
+				sign_line_number -=1;
+			}
+			$('#line_text').html("Line " + sign_line_number)
+			$('.Individual_signs').each(function(){
+				if(Math.floor(this.dataset.line) != sign_line_number){
+					$('#' + this.id).hide();
+				}else{
+					$('#' + this.id).show();
+				}
+			})
+		});
+		$('#next_line').on('click', function(){
+			console.log(sign_line_number);
+			if(sign_line_number != 9){
+				sign_line_number +=1;
+			}
+			$('#line_text').html("Line " + sign_line_number)
+			$('.Individual_signs').each(function(){
+				if(Math.floor(this.dataset.line) != sign_line_number){
+					$('#' + this.id).hide();
+				}else{
+					$('#' + this.id).show();
+				}
+			})
+		});
+	}
 	function NewOldSpot(id, x, y, width, height){
 		this.id = id; 
 		this.x = x; 
@@ -541,6 +574,9 @@
 		this.width = width;
 		this.height = height;
 
+	}
+	function handleChars(){
+		
 	}
 	function generateSpots(){
 		$('.hotspotInfo').each(function(){
@@ -734,10 +770,12 @@
         hotspot.addClass("matched-hb-rect-spot");
     }
     function toggle_tooltip (){
-    	$('html').click(function() {
+    	$('html').click(function(e) {
+    		e.stopPropagation();
 		    $('.hb-tooltip-wrap').hide()
 		});
 		$('.hb-spot-object').click(function(e) {
+			console.log('show tooltip')
 		  e.stopPropagation();
 		  $('.hb-tooltip-wrap').hide()
 		  $(this).find('.hb-tooltip-wrap').show() //css({'display' : 'block'});
@@ -790,9 +828,10 @@ $(function () {
 								is_old = true
 							}
 						}//for old_spots
+						console.log()
 						if(is_old != true){
 							$.ajax({
-								url: '/homePage/hotspot_ajax_form/' + 'new' + '/' + spots[i].x + '/' + Math.floor(spots[i].y) + '/' + spots[i].height + '/' + spots[i].width + '/' + username + '/' + Math.floor($(ui.draggable)[0].dataset.id),
+								url: '/homePage/hotspot_ajax_form/' + 'new' + '/' + spots[i].x + '/' + Math.abs(Math.floor(spots[i].y)) + '/' + spots[i].height + '/' + spots[i].width + '/' + username + '/' + Math.floor($(ui.draggable)[0].dataset.sign),
 								type: 'POST',
 								data: {
 									"x": spots[i].x,
@@ -802,8 +841,8 @@ $(function () {
 								success: function(data){
 									console.log(data.id)
 									spots[i].database_id = data.id
+									//has to be the new_old_spot here
 								 	old_spots.push(new_old_spot);
-								 	console.log("HELLO THIS SHOULD HAVE WORKDED " + data.id)
 								 	$('.success').val(data)
 								 	//match the characters
 								 },
@@ -829,7 +868,9 @@ $(function () {
 	           		"background-repeat" : "no-repeat",
 	           		"background-size" : "100% 100%",
 	           	});
-				
+				toggle_tooltip();
+				editSpot();
+				deleteSpot();
 	        },
 	        //Event to accept a draggable when dragged outside the droppable
 	        out: function (event, ui) {
@@ -859,5 +900,4 @@ $(function () {
 	        },
 	    };
 	})();
-
 }(jQuery));

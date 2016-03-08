@@ -354,14 +354,10 @@ h2 { font-size: 14px; line-height: 18px; }
 #Assyrian_sign ul li{
 	list-style-type: none;
 	display: inline-block;
-	margin: 5px;
 }
 #Assyrian_sign ul li img{
 	width: 50px;
 	height: 72px;
-	margin: 5px;
-	margin-left: -2px;
-	margin-right: -2px;
 }
 .qtip-content ul li{
 	list-style-type: none;

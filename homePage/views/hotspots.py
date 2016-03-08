@@ -40,25 +40,8 @@ def process_request(request):
                     raise forms.ValidationError("Please Enter a username")
                 return HttpResponseRedirect('/')
     #for the main webpage
-    tablets = m.Tablet.objects.get(name="VS 26 47")
-    # for x in range(1,15):
-    #     lines = m.Line()
-    #     lines.tablet = tablets
-    #     lines.side = "obv"
-    #     lines.lineNumber = x
-    #     lines.save()
-
-    # newTablet = m.Tablet()
-    # newTablet.name = 'VS 26 47'
-    # newTablet.imagePath = '/static/homepage/images/VS_26_47.png'
-    # newTablet.save()
-    # newChar = m.MatchingCharacter()
-    # newChar.filepath = "/static/homepage/images/8-01.png"
-    # newChar.name = "8-01"
-    # newChar.mimeType = "8-01"
-    # newChar.save()
-    #line = m.Line.objects.get(lineNumber = 1)
-    characters = m.AssyrianChar.objects.filter(line = 2)
+    tablets = m.Tablet.objects.get(name="KUG03-obv-01")
+    characters = m.AssyrianChar.objects.filter(Tablet_id = tablets.id)
     sign = m.Sign.objects.all()[:20]
     #only get identified characters if user is logged in
     if request.user.is_authenticated():
