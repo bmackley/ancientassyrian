@@ -3,6 +3,16 @@
 
 <!DOCTYPE html>
 <html lang="en" class="no-js">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-74941206-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 <head>
     <meta charset="UTF-8" />
     <title>Hotspot</title>
@@ -38,7 +48,7 @@
         %endfor
     %endif
     <div>
-        <center><h3>Tag characters and match the correct sign to the character. </h3></center>
+        <center><h3>Drag the signs onto the image of the tablet and then resize the sign to fit the corresponding sign on the image. </h3></center>
     </div>
     <div id="shell" data-username=${request.user}>
         <div id="hb-shell">
@@ -54,7 +64,7 @@
           %for object in characters:
               <li id ="List${object.line}${object.positionNO}"><img id = "Sign${object.line}${object.positionNO}" data-id = ${object.line}${object.positionNO} data-sign = ${object.Sign.id} data-line = ${object.line} class = "Individual_signs" src="${object.Sign}"></li>
           %endfor
-            <li style="position: relative; top:50%; transform: translateY(-50%);" id = "next_line"><i class="fa fa-arrow-right fa-4x fa-inverse "></i></li>
+            <li style="position: relative; top:50%; transform: translateY(-50%);" id = "next_line"><i class="fa fa-arrow-circle-right fa-4x fa-inverse "></i></li>
       </ul>
     </div>
     <script src="/static/homePage/js/lib/jquery.min.js"></script>

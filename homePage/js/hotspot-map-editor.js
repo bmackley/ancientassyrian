@@ -131,10 +131,23 @@
 	}
 	Rectangle_Spot.prototype.select = function() {
 		//enable_form();
+		console.log($('.hb-spot-object.selected')[0]);
+		$('.hb-spot-object.selected').removeClass('matched_character');
+		$('.hb-spot-object.selected').removeClass('hb-scale-handle');
+		$('.hb-spot-object.selected').removeClass('matched-hb-rect-spot');
+		$('.hb-spot-object.selected').addClass('hb-rect-spot');
+		$('.hb-spot-object.selected').find('.hb-move-handle').remove();
+		$('.hb-spot-object.selected').find('.hb-scale-handle').remove();
 		$('.hb-spot-object.selected').removeClass('selected');
 		this.root.addClass('selected');
+		this.root.removeClass('hb-rect-spot')
+		this.root.addClass('matched_character')
+		this.root.addClass('matched-hb-rect-spot')
+		this.root.append('<div class="hb-scale-handle"></div>');
+		this.root.append('<div class="hb-move-handle"></div>');
 		selectedSpot = this;
 		update_settings();
+
 	}
 	Rectangle_Spot.prototype.del = function() {
 		console.log('Rectangle Spot.prototype.del')
@@ -143,6 +156,7 @@
 		this.root.remove();
 		spots[this.id] = null;
 	}
+	//this doesn't do anything
 	Rectangle_Spot.prototype.deselect = function() {
 		console.log('Rectangle Spot.prototype.deselect')
 		this.root.removeClass('selected');
@@ -175,15 +189,15 @@
 
 	$(document).ready(function() {
 		init();
-		generateSpots();
 		init_events();
 		form_action();
+		generateSpots(); //trying it down here to see if the refresh issue can be corrected
 		disable_form();
 		deleteSpot();
 		toggle_tooltip();
-		editSpot();
 		getSigns();
 		handleChars();
+		deselectSpot();
 	});
 	function init() {
 		console.log('init')
@@ -603,12 +617,12 @@
 			console.log(this.dataset.sign)
 			//Characters that are already matched need to have the character
 			if(this.dataset.sign != 'None'){
-				$(targetObj.root[0]).addClass("matched_character");
-	            $(targetObj.root[0]).removeClass("hb-rect-spot");
-		        $(targetObj.root[0]).addClass("matched-hb-rect-spot");
+				// $(targetObj.root[0]).addClass("matched_character");
+	   //          $(targetObj.root[0]).removeClass("hb-rect-spot");
+		        // $(targetObj.root[0]).addClass("matched-hb-rect-spot");
 		     	$(targetObj.root[0]).find('.hb-move-handle').remove();
 		     	$(targetObj.root[0]).find('.hb-scale-handle').remove();//matched_CSS(targetObj.root[0]);
-		     	$(targetObj.root[0]).find('.hb-tooltip').html('<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green edit side-show"><i class="fa fa-pencil-square-o"></i></a></span>');  //this.settings['content'] '<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green disableHotspot side-show"><i class="fa fa-pencil-square-o"></i></a><a class="btn-floating green side-show"><i class="fa fa-check-circle"></i></a></span>'
+		     	$(targetObj.root[0]).find('.hb-tooltip').html('<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a></span>');  //this.settings['content'] '<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green disableHotspot side-show"><i class="fa fa-pencil-square-o"></i></a><a class="btn-floating green side-show"><i class="fa fa-check-circle"></i></a></span>'
 	           	$(targetObj.root[0]).css({
 	           		"background-image" : 'url(' + this.dataset.sign + ')',
 	           		"background-repeat" : "no-repeat",
@@ -724,11 +738,6 @@
 								 }//error
 							});//ajax
 							selectedSpot.del();
-							//selectedSpot.root.removeClass('selected');
-							// selectedSpot.root.remove();
-							// selectedSpot = undefined;
-							// spots.splice(i, 1)
-							// old_spots.splice(i, 1)
 						}//if
 					}//if (selectedSpot)	
 				}
@@ -738,31 +747,21 @@
 			}//for
 		});
 	};//deleteSpot
-	function editSpot(){
-		$('.edit').off('click').on('click', function(){
-			if (selectedSpot) {
+	//deselectSpot works with spot.prototype.select.  deselectSpot removes the selected spot when the user clicks outside of the spot and spot.prototype.select when a user clicks on another spot. 
+	function deselectSpot(){
+		$('html').off('click').on('click', function(){
+			if(selectedSpot){
+				selectedSpot.root.removeClass("matched-hb-rect-spot");
+				selectedSpot.root.removeClass("matched_character");
 				selectedSpot.root.addClass("hb-rect-spot");
-		        selectedSpot.root.removeClass("matched-hb-rect-spot");
-		     	selectedSpot.root.append(scaleHandle);
-				selectedSpot.root.append(moveHandle);
-				selectedSpot.root.find('.hb-tooltip').html('<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green complete side-show"><i class="fa fa-check-circle"></i></a></span>');  //this.settings['content'] '<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green disableHotspot side-show"><i class="fa fa-pencil-square-o"></i></a><a class="btn-floating green side-show"><i class="fa fa-check-circle"></i></a></span>'
-				deleteSpot();
-				completeSpot();
+		        selectedSpot.root.removeClass("selected");
+		     	selectedSpot.root.find('.hb-move-handle').remove();
+		     	selectedSpot.root.find('.hb-scale-handle').remove();
+		     	selectedSpot.root.find('.hb-tooltip-wrap').hide();
 			}
-			else{
-				editSpot();
-			}
-		});
-	}//editSpot
-	function completeSpot(){
-		$('.complete').off('click').on('click', function(){
-			selectedSpot.root.removeClass("hb-rect-spot");
-	        selectedSpot.root.addClass("matched-hb-rect-spot");
-	     	selectedSpot.root.find('.hb-move-handle').remove();
-	     	selectedSpot.root.find('.hb-scale-handle').remove();
-	     	selectedSpot.root.find('.hb-tooltip').html('<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green edit side-show"><i class="fa fa-pencil-square-o"></i></a></span>');  //this.settings['content'] '<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green disableHotspot side-show"><i class="fa fa-pencil-square-o"></i></a><a class="btn-floating green side-show"><i class="fa fa-check-circle"></i></a></span>'
-			deleteSpot();
-			editSpot()
+		})
+		$('.selected').off('click').on('click', function(event){
+			event.stopPropagation();
 		})
 	}
 	function matched_CSS(hotspot){
@@ -780,9 +779,8 @@
 		  $('.hb-tooltip-wrap').hide()
 		  $(this).find('.hb-tooltip-wrap').show() //css({'display' : 'block'});
 		});
-    };//show tooltip
-
-$(function () {
+    };//toggle tooltip
+	$(function () {
 	    var pastDraggable = "";
 	    var individual_sign = $('.Individual_signs');
 	    for (i=0; i < individual_sign.length; i++){
@@ -862,14 +860,13 @@ $(function () {
 				$(targetObj.root[0]).addClass("matched_character");
 	            $(targetObj.root[0]).removeClass("hb-rect-spot");
 		        $(targetObj.root[0]).addClass("matched-hb-rect-spot");
-		     	$(targetObj.root[0]).find('.hb-tooltip').html('<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green edit side-show"><i class="fa fa-pencil-square-o"></i></a></span>');  //this.settings['content'] '<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green disableHotspot side-show"><i class="fa fa-pencil-square-o"></i></a><a class="btn-floating green side-show"><i class="fa fa-check-circle"></i></a></span>'
+		     	$(targetObj.root[0]).find('.hb-tooltip').html('<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a></a></span>');  //this.settings['content'] '<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green disableHotspot side-show"><i class="fa fa-pencil-square-o"></i></a><a class="btn-floating green side-show"><i class="fa fa-check-circle"></i></a></span>'
 				$(targetObj.root[0]).css({
 	           		"background-image" : 'url(' + $(ui.draggable).attr('src') + ')',
 	           		"background-repeat" : "no-repeat",
 	           		"background-size" : "100% 100%",
 	           	});
 				toggle_tooltip();
-				editSpot();
 				deleteSpot();
 	        },
 	        //Event to accept a draggable when dragged outside the droppable
@@ -878,7 +875,7 @@ $(function () {
 	            var currentDraggable = $(ui.draggable).attr('id');
 	            $(ui.draggable).animate($(ui.draggable).data().originalLocation, "slow");
 	        }
-	    });
+	    });//Tablet
 	    function minMeasure(container_length, dropped_length){
 	       if(container_length < dropped_length){
 	       		return container_length;
@@ -886,9 +883,9 @@ $(function () {
 	       else{
 	       		return dropped_length ;
 	       }
-	    }
-	});
-	    var Positioning = (function () {
+	    }//function
+	});//Function (Create New Hotspots)
+    var Positioning = (function () {
 	    return {
 	        //Initializes the starting coordinates of the object
 	        initialize: function (object) {
@@ -898,6 +895,6 @@ $(function () {
 	        reset: function (object) {
 	            object.data("originalLocation").originalPosition = { top: 0, left: 0 };
 	        },
-	    };
-	})();
+	    };//return
+	})();//Positioning
 }(jQuery));

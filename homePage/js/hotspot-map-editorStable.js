@@ -1,6 +1,7 @@
 (function ($, undefined) {
 
 	var wrap = 0, wrapOffsetX = 0, wrapOffsetY = 0, spots = new Array(), old_spots = new Array(), globals;
+	var sign_line_number = 1; var sign_objects = new Array();
 	var spotID = 0;
 	var targetObj = 0;
 	var mx = 0, my = 0, mox = 0, moy = 0, mix = 0, miy = 0, ix = 0, iy = 0, ox = 0, oy = 0, iw = 0, ih = 0;
@@ -9,7 +10,7 @@
 	var scaleHandle = '', moveHandle = '';
 	var tooltip = ''; // element reference
 	var selectedSpot = undefined;
-
+	var matchID = undefined; //the id of the last match
 	function Globals() {
 		this.settings = { "show_on" : 'click', "responsive" : true };
 		console.log('Global Function')
@@ -21,7 +22,6 @@
 		for (var i=0; i<len; i++) {
 			spots[i].settings['show_on'] = this.settings['show_on'];
 			spots[i].apply_settings();
-			console.log(i)
 		}
 	}
 	Globals.prototype.set = function(setting, value) {
@@ -66,8 +66,6 @@
 	//same as Rectangle_Spot.prototype.draw, just used to create hotspots from server
 	Rectangle_Spot.prototype.make = function(width, height) {
 		console.log('Rectangle Spot.prototype.make')
-		console.log(width)
-		console.log(height)
 		this.width = width;
 		this.height = height;
 
@@ -78,23 +76,14 @@
 		this.width = (mox < 16) ? 16 : mox;
 		this.height = (moy < 16) ? 16 : moy;
 		console.log('draw variables')
-		console.log(this.width + this.x)
-		console.log(cw)
-		console.log('end draw')
 		// Constrain to edges of the container
 		this.width = (this.width + this.x > cw) ? cw - this.x : this.width;
 		this.height = (this.height + this.y > ch) ? ch - this.y : this.height;
-		console.log('draw')
-		console.log(this.width)
-		console.log(this.height)
-		console.log('end draw')
 		this.root.css({ "width" : this.width, "height" : this.height });
 	}
 	Rectangle_Spot.prototype.end_drawing = function() {
-		console.log('Rectangle Spot.prototype.end_drawing ADD THE TOOLTIP HERE')
 		this.root.append(scaleHandle);
 		this.root.append(moveHandle);
-		console.log(this.root.find('.hb-tooltip').html())
 		if (this.width < 16 && this.height < 16) {
 			this.success = false;
 		}
@@ -113,8 +102,6 @@
 		console.log('Rectangle Spot.prototype.move')
 		this.x = (ix + mox + this.width > cw) ? cw - this.width : (ix + mox < 0) ? 0 : ix + mox;
 		this.y = (iy + moy + this.height > ch) ? ch - this.height : (iy + moy < 0) ? 0 : iy + moy;
-		console.log(this.x)
-		console.log(this.y)
 		this.root.css({
 			"left" : this.x,
 			"top" : this.y
@@ -139,9 +126,11 @@
 			"width" : this.width,
 			"height" : this.height
 		});
+		console.log('should be updating now')
+		updateHotspot();
 	}
 	Rectangle_Spot.prototype.select = function() {
-		enable_form();
+		//enable_form();
 		$('.hb-spot-object.selected').removeClass('selected');
 		this.root.addClass('selected');
 		selectedSpot = this;
@@ -151,7 +140,6 @@
 		console.log('Rectangle Spot.prototype.del')
 		this.deselect();
 		disable_form();
-
 		this.root.remove();
 		spots[this.id] = null;
 	}
@@ -187,13 +175,16 @@
 
 	$(document).ready(function() {
 		init();
-		generateSpots();
+		//generateSpots();
 		init_events();
 		form_action();
+		generateSpots(); //trying it down here to see if the refresh issue can be corrected
 		disable_form();
 		deleteSpot();
 		toggle_tooltip();
 		editSpot();
+		getSigns();
+		handleChars();
 	});
 	function init() {
 		console.log('init')
@@ -268,6 +259,7 @@
 
 			mox = mx - mix;
 			moy = my - miy;
+			
 
 			// ============= TOOLTIP =============
 			if (tooltipVisible) {
@@ -317,19 +309,19 @@
 				console.log('mousemove')
 				if (mox > 5 && moy > 5) {
 					startedDrawing = true;
-					drawing = true;
+					//drawing = true;
 
-					targetObj = new Rectangle_Spot(mx - cx, my - cy);
-					targetObj.init();
+					//targetObj = new Rectangle_Spot(mx - cx, my - cy);
+					//targetObj.init();
 				}
 
 				return;
 			}
 
-			if (drawing) {
-				targetObj.draw();
-				return;
-			}
+			// if (drawing) {
+			// 	targetObj.draw();
+			// 	return;
+			// }
 
 			update_tooltip();
 		});
@@ -358,10 +350,10 @@
 				drawing = false;
 			} else {
 				if (($(e.target).attr('id') == 'hb-map-wrap' || $(e.target).closest('#hb-map-wrap').length != 0) && mouseDown) {
-					targetObj = new Spot(mx - cx, my - cy);
-					spots[spotID - 1] = targetObj;
-					targetObj.init();
-					dynamic_events();
+					// targetObj = new Spot(mx - cx, my - cy);
+					// spots[spotID - 1] = targetObj;
+					// targetObj.init();
+					// dynamic_events();
 				}
 			}
 
@@ -395,8 +387,8 @@
 			spots[$(this).attr('id').replace('hb-spot-', '')].select();
 		});
 		submitForm();
-		createDroppable($('.hb-spot-object'));
-		console.log('old sotsdfasd')
+		//createDroppable($('.hb-spot-object'));
+		console.log('old spots')
 		console.log(old_spots.length)
 	}
 	function show_tooltip(text) {
@@ -541,14 +533,54 @@
 		$('#hb-live-preview').html(html);
 		$('#hb-live-preview').find('.hs-wrap').hotspot({ 'show_on' : globals.settings['show_on'], 'responsive' : globals.settings['responsive'] });
 	}
-	$(function () {
-		$('.disableHotspot').off('click').on('click', function(){
-			console.log('work my booty')
+	function getSigns(){
+		$('.Individual_signs').each(function(){
+			if(Math.floor(this.dataset.line) != sign_line_number){
+				$('#' + this.id).hide();
+			}
+			$('#line_text').html("Line " + sign_line_number)
 		})
-	});
+		$('#previous_line').on('click', function(){
+			if(sign_line_number != 1){
+				sign_line_number -=1;
+			}
+			$('#line_text').html("Line " + sign_line_number)
+			$('.Individual_signs').each(function(){
+				if(Math.floor(this.dataset.line) != sign_line_number){
+					$('#' + this.id).hide();
+				}else{
+					$('#' + this.id).show();
+				}
+			})
+		});
+		$('#next_line').on('click', function(){
+			console.log(sign_line_number);
+			if(sign_line_number != 9){
+				sign_line_number +=1;
+			}
+			$('#line_text').html("Line " + sign_line_number)
+			$('.Individual_signs').each(function(){
+				if(Math.floor(this.dataset.line) != sign_line_number){
+					$('#' + this.id).hide();
+				}else{
+					$('#' + this.id).show();
+				}
+			})
+		});
+	}
+	function NewOldSpot(id, x, y, width, height){
+		this.id = id; 
+		this.x = x; 
+		this.y = y;
+		this.width = width;
+		this.height = height;
+
+	}
+	function handleChars(){
+		
+	}
 	function generateSpots(){
 		$('.hotspotInfo').each(function(){
-			console.log(this.dataset.sign + 'aaaaaaaaaaa')
 		      var $el = $('#Tablet');
 		      //set width and height of image
 		      cw = $el.width()
@@ -562,9 +594,12 @@
 			targetObj.draw();
 			tooltip.css({ "left" : this.dataset.x, "top" : this.dataset.y });
 			targetObj.end_drawing();
+			targetObj.database_id = this.dataset.id;
 			spots.push(targetObj);
-			targetObj.database_id = this.dataset.id
-			old_spots.push(targetObj);
+			new_old_spot = new NewOldSpot(targetObj.id, targetObj.x, targetObj.y, targetObj.width, targetObj.height);
+			old_spots.push(new_old_spot);
+			console.log("Old Spot ID" + new_old_spot.id)
+
 			dynamic_events();
 			console.log(this.dataset.sign)
 			//Characters that are already matched need to have the character
@@ -592,126 +627,116 @@
 		//variables
 		var username = $('#shell').data('username'); var is_old = false;
 		for(var i = 0; i < spots.length; i++){
-			console.log('this is letter ' + i)
-			for(var j = 0; j < old_spots.length; j++){
-				if(spots[i].id == old_spots[j].id){
-					is_old = true
-				}
-			}//for old_spots
-			if(is_old == true){
+			if(spots[i] != null){
+				for(var j = 0; j < old_spots.length; j++){
+					if(spots[i].id == old_spots[j].id){
+						is_old = true
+					}
+				}//for old_spots
+				if(is_old == true){
 
-			}else{
-				console.log('this is my original i ' + i)
-				console.log(spots[i])
-				$.ajax({
-					url: '/homePage/hotspot_ajax_form/' + 'new' + '/' + spots[i].x + '/' + Math.floor(spots[i].y) + '/' + spots[i].height + '/' + spots[i].width + '/' + username,
-					type: 'POST',
-					data: {
-						"x": spots[i].x,
-						"y": spots[i].y,
-					},
-					success: function(data){
-					 	console.log(data.id)
-					 	console.log('this is my i' + i)
-					 	console.log(spots[i-1])
-					 	spots[i-1].database_id = data.id;
-					 	old_spots.push(spots[i-1]);
-					 	for(var q=0; q< old_spots.length; q++){
-					 		console.log(old_spots[q])
-					 	}
-					 	$('.success').val(data)
-					 	//dont add new spots again
-					 },
-					 error: function(err){
-					 	alert(err)
-					 	console.log('Error');
-					 	console.log(err);
-					 }//error
-				});//ajax
-			}//old_spot for
+				}else{
+					$.ajax({
+						url: '/homePage/hotspot_ajax_form/' + 'new' + '/' + spots[i].x + '/' + Math.floor(spots[i].y) + '/' + spots[i].height + '/' + spots[i].width + '/' + username,
+						type: 'POST',
+						data: {
+							"x": spots[i].x,
+							"y": spots[i].y,
+						},
+						success: function(data){
+						 	console.log(spots[i-1])
+						 	spots[i-1].database_id = data.id;
+						 	old_spots.push(spots[i-1]);
+						 	matchID = data.id;
+						 	for(var q=0; q< old_spots.length; q++){
+						 		console.log(old_spots[q])
+						 	}
+						 	$('.success').val(data)
+						 	//dont add new spots again
+						 },
+						 error: function(err){
+						 	alert(err)
+						 	console.log('Error');
+						 	console.log(err);
+						 }//error
+					});//ajax
+				}//old_spot for
+			}
 		is_old = false
 		}//for
 	}//function
 	function updateHotspot() {
+		console.log('update Hotspot')
 		var username = $('#shell').data('username'); var is_old = false;
 		for (var i = 0; i < spots.length; i++){
-			$('.hotspotInfo').each(function(){
-				if(this.dataset.id == old_spots[i].database_id){
-					if(this.dataset.x != old_spots[i].x || this.dataset.y != old_spots[i].y || this.dataset.width != old_spots[i].width || this.dataset.height != old_spots[i].height){
+			console.log('spot ' + i + ' '); 
+			console.log(spots[i])
+			console.log('old spot ' + i + ' ' )
+			console.log(old_spots[i])
+			if(spots[i] != null){
+				if(spots[i].id == old_spots[i].id){
+					//check if the hotspot changed at all
+					// console.log('Old Spot')
+					//console.log('Old SPots id: ' + old_spots[i].id + "   Old Spots x "  + old_spots[i].x + "  Old Spots y " + old_spots[i].y + "   Old Spots width "  + old_spots[i].width + "  Old Spots height " + old_spots[i].height);
+					// console.log("SPots id: " + spots[i].id + "  Spots x " + spots[i].x + "  Spots y " + spots[i].y + "  Spots width " + spots[i].width + "  Spots height " + spots[i].height);
+					if(spots[i].x != old_spots[i].x || spots[i].y != old_spots[i].y || spots[i].width != old_spots[i].width || spots[i].height != old_spots[i].height){
 						$.ajax({
-							url: '/homePage/hotspot_ajax_form/' + 'update' + '/' + spots[i].x + '/' + spots[i].y + '/' + spots[i].height + '/' + spots[i].width + '/' + username + '/' + this.dataset.id,
+							url: '/homePage/hotspot_ajax_form/' + 'update' + '/' + spots[i].x + '/' + spots[i].y + '/' + spots[i].height + '/' + spots[i].width + '/' + username + '/' + spots[i].database_id,
+							async: false,
 							success: function(data){
-							 	console.log('success');
+							 	console.log('Update success');
 							 	$('.success').val(data)
-							 	//dont add new spots again
+							 	//update old spot
+							 	old_spots[i].x = spots[i].x;
+							 	old_spots[i].y = spots[i].y;
+							 	old_spots[i].width = spots[i].width;
+							 	old_spots[i].height = spots[i].height;
+
 							 },
 							 error: function(err){
 							 	console.log('Error');
 							 	console.log(err);
 							 }//error
-						});
+						});//ajax
 					}
-				}else{
-					console.log('this is not working');
-				}
-			});
+				}//elseif
+			}
 		}
 	}// function updateHotspot
 	function deleteSpot(){
 		$('.delete').off('click').on('click', function(){
-			if (selectedSpot) {
-				if(Math.floor(selectedSpot.id) >= old_spots.length){
-					for(var i = 0; i !== spots.length; i++){
-						console.log('this is letter' + i);
-						console.log(spots[i]);
+			console.log('deleted')
+			for(var i = 0; i !== spots.length; i++){
+				if(spots[i] != null){
+					if (selectedSpot) {
 						if(selectedSpot.id == spots[i].id){
-							var deleted_spot_id = spots[i].database_id
+							var deleted_spot_id = Math.floor(spots[i].database_id)
+							$.ajax({
+								url: '/homePage/hotspot_delete/' + deleted_spot_id,
+								type: 'POST',
+								success: function(data){
+								 	console.log('success');
+								 	$('.success').val(data)
+								 	//dont add new spots again
+								 },
+								 error: function(err){
+								 	alert(err)
+								 	console.log('Error');
+								 }//error
+							});//ajax
+							selectedSpot.del();
+							//selectedSpot.root.removeClass('selected');
+							// selectedSpot.root.remove();
+							// selectedSpot = undefined;
+							// spots.splice(i, 1)
+							// old_spots.splice(i, 1)
 						}//if
-					}//for
-					console.log(spots[i])
-					$.ajax({
-						url: '/homePage/hotspot_delete/' + Math.floor(selectedSpot.y) + '/' + Math.floor(selectedSpot.x) + '/new',
-						type: 'POST',
-						success: function(data){
-						 	console.log('success');
-						 	$('.success').val(data)
-						 	//dont add new spots again
-						 },
-						 error: function(err){
-						 	alert(err)
-						 	console.log('Error');
-						 	console.log(err);
-						 }//error
-					});//ajax
-				}else{
-					for(var i = 0; i !== old_spots.length; i++){
-						console.log('this is number' + i);
-						console.log(old_spots[i]);
-						if(selectedSpot.id == old_spots[i].id){
-							var deleted_spot_id = old_spots[i].database_id
-							console.log(old_spots[i.database_id])
-						}//if
-					}//for
-					$.ajax({
-						url: '/homePage/hotspot_delete/' + deleted_spot_id,
-						type: 'POST',
-						success: function(data){
-						 	console.log('success');
-						 	$('.success').val(data)
-						 	//dont add new spots again
-						 },
-						 error: function(err){
-						 	alert(err)
-						 	console.log('Error');
-						 	console.log(err);
-						 }//error
-					});//ajax
-				}//if
-				selectedSpot.del();
-			}//if (selectedSpot)
-			else{
-				deleteSpot()
-			}
+					}//if (selectedSpot)	
+				}
+				else{
+					'spots position is null'
+				}
+			}//for
 		});
 	};//deleteSpot
 	function editSpot(){
@@ -742,122 +767,26 @@
 		})
 	}
 	function matched_CSS(hotspot){
-		console.log(hotspot)
         hotspot.removeClass("hb-rect-spot");
         hotspot.addClass("matched-hb-rect-spot");
-     	hotspot.find('.hb-move-handle').remove();
-     	hotspot.find('.hb-scale-handle').remove();
     }
     function toggle_tooltip (){
-    	$('html').click(function() {
+    	$('html').click(function(e) {
+    		e.stopPropagation();
 		    $('.hb-tooltip-wrap').hide()
 		});
 		$('.hb-spot-object').click(function(e) {
+			console.log('show tooltip')
 		  e.stopPropagation();
 		  $('.hb-tooltip-wrap').hide()
 		  $(this).find('.hb-tooltip-wrap').show() //css({'display' : 'block'});
 		});
-    };//show tooltip
-	function createDroppable(spot){
-		var pastDraggable = "";
-	    var individual_sign = $('.Individual_signs');
-	    for (i=0; i < individual_sign.length; i++){
-	    	$('#'+ individual_sign[i].id).draggable({
-		        start: function () {
-		            Positioning.initialize($(this));
-		        },
-		     revert: "valid",
-		     revertDuration: 0,
-		    });
-	    }
-	    spot.droppable({
-	        //Event to accept a draggable when dropped on the droppable
-	        drop: function (event, ui) {
-	            $(this).addClass("matched_character");
-	            //Get the current draggable object
-	            var currentDraggable = $(ui.draggable)[0];
-	            matched_CSS($(this));
-	            pastDraggable = currentDraggable;
-	           	clonedDraggable = $('#'+currentDraggable.id).clone()
-	           	var minWidth = minMeasure($(this)[0].offsetWidth, clonedDraggable[0].width)
-	           	var minHeight = minMeasure($(this)[0].offsetHeight, clonedDraggable[0].height)
-	           	if(clonedDraggable.offsetWidth > minMeasure($(this)[0].offsetWidth)){
-	           		clonedDraggable.width(minMeasure($(this)[0].offsetWidth));
-	           	}
-	           	if(clonedDraggable.offsetHeight > minMeasure($(this)[0].offsetHeight)){
-	           		clonedDraggable.height(minMeasure($(this)[0].offsetHeight));
-	           	}
-	           	console.log($(this).position().left)
-	           	clonedDraggable.css({
-	           		"top": "0px",
-	           		"left" : "0px",
-	           		"width" : minWidth,
-	           		"height" : minHeight,
-	           		});
-	           	// clonedDraggable.appendTo($(this))
-	           	imageUrl = $('#' + clonedDraggable[0].id).attr('src');
-	           	console.log(imageUrl)
-	           	//sets the background image of the div, which allows it to move around and to resize correctly
-	           	$(this).css({
-	           		"background-image" : 'url(' + imageUrl + ')',
-	           		"background-repeat" : "no-repeat",
-	           		"background-size" : "100% 100%",
-	           	});
-	           	console.log($(this))
-	           	$(this).find('.hb-tooltip').html('<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green edit side-show"><i class="fa fa-pencil-square-o"></i></a></span>');  //this.settings['content'] '<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green disableHotspot side-show"><i class="fa fa-pencil-square-o"></i></a><a class="btn-floating green side-show"><i class="fa fa-check-circle"></i></a></span>'
-	            editSpot();
-	            $.ajax({
-	                url: '/homePage/hotspot_ajax_form/' + 'match' + '/' + Math.floor($(this).position().top) + '/' + Math.floor($(this).position().left) + '/' + currentDraggable.dataset.id,
-	                success: function(data){
-	                    console.log('success');
-	                    $('.success').val(data)
-	                    //dont add new spots again
-	                 },
-	                 error: function(err){
-	                    console.log('Error');
-	                    console.log(err);
-	                 }//error
-	            });
-	        },
-	        //Event to accept a draggable when dragged outside the droppable
-	        out: function (event, ui) {
-	        	console.log('e')
-	            var currentDraggable = $(ui.draggable).attr('id');
-	            $(ui.draggable).animate($(ui.draggable).data().originalLocation, "slow");
-	        }
-	    }); //spot droppable
-	    function edit_hotspot(){
-	    	console.log('edit')
-	    }
-	    function minMeasure(container_length, dropped_length){
-	       if(container_length < dropped_length){
-	       		return container_length;
-	       }
-	       else{
-	       		return dropped_length ;
-	       }
-	    }
-	    var Positioning = (function () {
-	    	return {
-		        //Initializes the starting coordinates of the object
-		        initialize: function (object) {
-		            object.data("originalLocation", $(this).originalPosition = { top: 0, left: 0 });
-		        },
-		        //Resets the object to its starting coordinates
-		        reset: function (object) {
-		            object.data("originalLocation").originalPosition = { top: 0, left: 0 };
-		        },
-		    };
-		})();
-		toggle_tooltip();
-		deleteSpot();
-	}//end function
-	//MATCH THE CHARACTERS TOGETHER  From http://www.codeproject.com/Articles/683252/Accept-only-the-latest-dropped-draggable-in-a-drop
+    };//toggle tooltip
+
 	$(function () {
 	    var pastDraggable = "";
 	    var individual_sign = $('.Individual_signs');
 	    for (i=0; i < individual_sign.length; i++){
-	    	console.log(individual_sign[i].id)
 	    	$('#'+ individual_sign[i].id).draggable({
 		        start: function () {
 		            Positioning.initialize($(this));
@@ -867,61 +796,82 @@
 		    });
 	    }
 
-	    $(".hb-rect-spot").droppable({
+	    $("#Tablet").droppable({
 	        //Event to accept a draggable when dropped on the droppable
 	        drop: function (event, ui) {
-	            $(this).addClass("matched_character");
 	            //Get the current draggable object
 	            var currentDraggable = $(ui.draggable)[0];
-	            console.log('this is ui draggable');
-	            console.log(currentDraggable);
-	            matched_CSS($(this));
+	            var tablet = $('#Tablet');
+		      //set position and height of image
+		    	pos_left = Math.floor($(ui.draggable)[0].x) - Math.floor(tablet[0].x);
+		    	pos_top = Math.floor($(ui.draggable)[0].y) - Math.floor(tablet[0].y)
+		     	//generate the hotspots
+				targetObj = new Rectangle_Spot(pos_left, pos_top);
+				targetObj.init();
+				targetObj.apply_settings();
+				mox = Math.floor($(ui.draggable)[0].width);
+				moy = Math.floor($(ui.draggable)[0].height);
+				targetObj.draw();
+				tooltip.css({ "left" : pos_left, "top" : pos_top });
+				targetObj.end_drawing();
+				spots.push(targetObj);
+				//old_spots.push(targetObj);
+				new_old_spot = new NewOldSpot(targetObj.id, targetObj.x, targetObj.y, targetObj.width, targetObj.height);
+				//old_spots.push(new_old_spot);
+				console.log("Old Spot ID" + new_old_spot.id)
+				//old_spots.push(new_old_spot);
+				//$('.hb-scale-handle, .hb-move-handle, .hb-spot, .hb-spot-object').off('.hb');
+				var username = $('#shell').data('username'); var is_old = false;
+				for(var i = 0; i < spots.length; i++){
+					if(spots[i] != null){
+						for(var j = 0; j < old_spots.length; j++){
+							if(spots[i].id == old_spots[j].id){
+								is_old = true
+							}
+						}//for old_spots
+						console.log()
+						if(is_old != true){
+							$.ajax({
+								url: '/homePage/hotspot_ajax_form/' + 'new' + '/' + spots[i].x + '/' + Math.abs(Math.floor(spots[i].y)) + '/' + spots[i].height + '/' + spots[i].width + '/' + username + '/' + Math.floor($(ui.draggable)[0].dataset.sign),
+								type: 'POST',
+								data: {
+									"x": spots[i].x,
+									"y": spots[i].y,
+								},
+								async: false,
+								success: function(data){
+									console.log(data.id)
+									spots[i].database_id = data.id
+									//has to be the new_old_spot here
+								 	old_spots.push(new_old_spot);
+								 	$('.success').val(data)
+								 	//match the characters
+								 },
+								 error: function(err){
+								 	alert(spots[i])
+								 	console.log('Error');
+								 	console.log(err);
+								 }//error
+							});//ajax
+						}//old_spot if
+					}
+				is_old = false
+				}//for
 
-	            //If there is an object prior to the current one
-	            // if (pastDraggable != "") {
-	            // 	console.log('e')
-	            // 	console.log(pastDraggable)
-	            //     //Place past object into its original coordinate
-	            //     $(pastDraggable).animate($(pastDraggable).data().originalLocation, "slow");
-	            // }
-	            //Store the current draggable object
-	            pastDraggable = currentDraggable;
-	           	clonedDraggable = $('#'+currentDraggable.id).clone()
-	           	var minWidth = minMeasure($(this)[0].offsetWidth, clonedDraggable[0].width)
-	           	var minHeight = minMeasure($(this)[0].offsetHeight, clonedDraggable[0].height)
-	           	if(clonedDraggable.offsetWidth > minMeasure($(this)[0].offsetWidth)){
-	           		clonedDraggable.width(minMeasure($(this)[0].offsetWidth));
-	           	}
-	           	if(clonedDraggable.offsetHeight > minMeasure($(this)[0].offsetHeight)){
-	           		clonedDraggable.height(minMeasure($(this)[0].offsetHeight));
-	           	}
-	           	console.log($(this).position().left)
-	           	clonedDraggable.css({
-	           		"top": "0px",
-	           		"left" : "0px",
-	           		"width" : minWidth,
-	           		"height" : minHeight,
-	           		});
-	           	// clonedDraggable.appendTo($(this))
-	           	imageUrl = $('#' + clonedDraggable[0].id).attr('src');
-	           	//sets the background image of the div, which allows it to move around and to resize correctly
-	           	$(this).css({
-	           		"background-image" : 'url(' + imageUrl + ')',
+				dynamic_events();
+				//new_match = $("#hb-spot-" + targetObj.id)
+				$(targetObj.root[0]).addClass("matched_character");
+	            $(targetObj.root[0]).removeClass("hb-rect-spot");
+		        $(targetObj.root[0]).addClass("matched-hb-rect-spot");
+		     	$(targetObj.root[0]).find('.hb-tooltip').html('<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green edit side-show"><i class="fa fa-pencil-square-o"></i></a></span>');  //this.settings['content'] '<span style="display: inline"><a class="btn-floating red delete side-show"><i class="fa fa-trash"></i></a><a class="btn-floating green disableHotspot side-show"><i class="fa fa-pencil-square-o"></i></a><a class="btn-floating green side-show"><i class="fa fa-check-circle"></i></a></span>'
+				$(targetObj.root[0]).css({
+	           		"background-image" : 'url(' + $(ui.draggable).attr('src') + ')',
 	           		"background-repeat" : "no-repeat",
 	           		"background-size" : "100% 100%",
 	           	});
-	            $.ajax({
-	                url: '/homePage/hotspot_ajax_form/' + 'match' + '/' + Math.floor($(this).position().top) + '/' + Math.floor($(this).position().left) + '/' + currentDraggable.dataset.id,
-	                success: function(data){
-	                    console.log('success');
-	                    $('.success').val(data)
-	                    //dont add new spots again
-	                 },
-	                 error: function(err){
-	                    console.log('Error');
-	                    console.log(err);
-	                 }//error
-	            });
+				toggle_tooltip();
+				editSpot();
+				deleteSpot();
 	        },
 	        //Event to accept a draggable when dragged outside the droppable
 	        out: function (event, ui) {
@@ -929,7 +879,7 @@
 	            var currentDraggable = $(ui.draggable).attr('id');
 	            $(ui.draggable).animate($(ui.draggable).data().originalLocation, "slow");
 	        }
-	    });
+	    });//Tablet
 	    function minMeasure(container_length, dropped_length){
 	       if(container_length < dropped_length){
 	       		return container_length;
@@ -937,9 +887,9 @@
 	       else{
 	       		return dropped_length ;
 	       }
-	    }
-	});
-	    var Positioning = (function () {
+	    }//function
+	});//Function (Create New Hotspots)
+    var Positioning = (function () {
 	    return {
 	        //Initializes the starting coordinates of the object
 	        initialize: function (object) {
@@ -949,7 +899,6 @@
 	        reset: function (object) {
 	            object.data("originalLocation").originalPosition = { top: 0, left: 0 };
 	        },
-	    };
-	})();
-
+	    };//return
+	})();//Positioning
 }(jQuery));

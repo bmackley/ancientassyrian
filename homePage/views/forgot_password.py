@@ -14,7 +14,7 @@ def process_request(request):
     'form' : form,
   }
 
-  return templater.render_to_response(request, 'login.html', tvars)
+  return templater.render_to_response(request, 'forgot_password.html', tvars)
 
 class ForgotPassForm(forms.Form):
   email = forms.CharField(required=False, label='Email', widget=forms.TextInput(attrs={'class':'form-control'}))
@@ -22,7 +22,4 @@ class ForgotPassForm(forms.Form):
   def clean(self):
     email = self.cleaned_data['email'].lower()
     print(uName)
-    user = authenticate(username = uName, password = self.cleaned_data['password'])
-    if user == None:
-      raise forms.ValidationError("Incorrect password or Username") 
     return self.cleaned_data
