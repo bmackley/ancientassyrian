@@ -1424,7 +1424,6 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 1
   new_char.line = line
-  tablet = m.Sign.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
   new_char.note = "6a74eaae-3c30-4661-a7fb-2adfc974df0b"
