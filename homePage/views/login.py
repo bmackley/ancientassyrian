@@ -8,7 +8,6 @@ from . import templater
 def process_request(request):
   if request.method == 'POST':
     form = LoginForm(request.POST)
-    print(request.POST)
     if form.is_valid():
       userN = form.cleaned_data['username'].lower()
       user = authenticate(username = userN, password = form.cleaned_data['password'])
@@ -33,7 +32,6 @@ class LoginForm(forms.Form):
 
   def clean(self):
     uName = self.cleaned_data['username'].lower()
-    print(uName)
     user = authenticate(username = uName, password = self.cleaned_data['password'])
     if user == None:
       raise forms.ValidationError("Incorrect password or Username")

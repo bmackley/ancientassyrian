@@ -20,12 +20,10 @@ def process_request(request):
 		return HttpResponseRedirect('/shop/create_user/')
 	else:
 		users = m.User.objects.get(id=request.urlparams[0])
-	print(users.height)
 	try:
 		ft = int(users.height/12)
 	except:
 		ft = 0
-	print(ft)
 	try: 
 		form = UsersForm(initial={
 			'username':users.username,

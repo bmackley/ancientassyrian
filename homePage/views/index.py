@@ -19,16 +19,12 @@ def process_request(request):
     createForm = CreateUserForm()
     if request.urlparams[0] == "1":
         createForm = CreateUserForm(request.POST)
-        print('1')
         if createForm.is_valid():
-            print('2')
             newUser = m.User()
-            print(createForm.cleaned_data['username'])
             newUser.username = createForm.cleaned_data['username']
             newUser.email = createForm.cleaned_data['email']
             newUser.password = createForm.cleaned_data['password']
             newUser.save()
-            print('3')
             return HttpResponseRedirect('/homePage/tutorial')
     else:
         if request.method == "POST":
@@ -72,7 +68,6 @@ def process_request(request):
         identifiedChars = m.IdentifiedCharacter.objects.filter(user = request.user)
     else:
         identifiedChars = 'no characters'
-    print(createForm)
     tvars = {
         #'tablets': tablets,
         'form' : form,

@@ -21,7 +21,6 @@ def process_request(request):
         createForm = CreateUserForm(request.POST)
         if createForm.is_valid():
             newUser = m.User()
-            print(createForm.cleaned_data['username'])
             newUser.username = createForm.cleaned_data['username']
             newUser.email = createForm.cleaned_data['email']
             newUser.password = createForm.cleaned_data['password']
@@ -60,9 +59,6 @@ class CreateUserForm(forms.Form):
             super(CreateUserForm, self).__init__(*args, **kwargs)
 
     def clean(self):
-        print('aaaaaa')
-        print(self.cleaned_data['username'])
-        print('bbbbbbb')
         if self.cleaned_data['username'] == "":
             raise forms.ValidationError("Please enter a username to sign up")
         if self.cleaned_data['username'] == m.User.objects.filter(username = self.cleaned_data['username']):

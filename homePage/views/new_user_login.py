@@ -6,7 +6,5 @@ from homePage import models as m
 from . import templater
 
 def process_request(request):
-  print(request.urlparams[1])
-  
 
   return templater.render_to_response(request, 'tutorial.html', tvars)

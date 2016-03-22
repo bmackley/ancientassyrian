@@ -15,8 +15,6 @@ def process_request(request):
 		if request.urlparams[2] == 'new':
 			deleted_character_database = m.IdentifiedCharacter.objects.get(hotspot_x = request.urlparams[1], hotspot_y = request.urlparams[0])
 			deleted_character_id = deleted_character_database.id
-			print(request.urlparams[1])
-			print(request.urlparams[2])
 		else:
 			deleted_character_id = request.urlparams[0]
 			deleted_character_database = m.IdentifiedCharacter.objects.get(id = deleted_character_id)

@@ -17,17 +17,12 @@ def process_request(request):
 	if request.urlparams[0] == 'new':
 		idCharForm = m.IdentifiedCharacter()
 		idCharForm.hotspot_x = request.urlparams[1]
-		print(request.urlparams[2])
 		idCharForm.hotspot_y = request.urlparams[2]
-		print(request.urlparams[3])
 		idCharForm.hotspot_height = request.urlparams[3]
-		print(request.urlparams[4])
 		idCharForm.hotspot_width = request.urlparams[4]
-		print(request.urlparams[5])
 		idCharForm.user = m.User.objects.get(username = request.urlparams[5])
 		matchedSign = m.Sign.objects.get(id = request.urlparams[6])
 		idCharForm.sign = matchedSign
-		print(idCharForm.user)
 		idCharForm.save()
 		saved_idCharForm = m.IdentifiedCharacter.objects.get(hotspot_x = request.urlparams[1], hotspot_y = request.urlparams[2])
 
@@ -36,7 +31,6 @@ def process_request(request):
 		}
 		return JsonResponse(hotspot_id)
 	if request.urlparams[0] == "update":
-		print('update')
 		idCharForm = m.IdentifiedCharacter.objects.get(id = request.urlparams[6])
 		idCharForm.hotspot_x = request.urlparams[1]
 		idCharForm.hotspot_y = request.urlparams[2]
@@ -45,18 +39,11 @@ def process_request(request):
 		idCharForm.user = m.User.objects.get(username = request.urlparams[5])
 		idCharForm.save()
 	if request.urlparams[0] == "match":
-		print(request.urlparams[1])
-		print(request.urlparams[2])
-		print(request.urlparams[3])
-
 		idCharForm = m.IdentifiedCharacter.objects.get(hotspot_y = request.urlparams[1], hotspot_x = request.urlparams[2])
-		print('working here')
 		matchedSign = m.Sign.objects.get(id = request.urlparams[3])
-		print('working here 2')
 		idCharForm.sign = matchedSign
-
 		idCharForm.save()
-		print(idCharForm.id)
+	
 	tvars = {
 	 
 	}

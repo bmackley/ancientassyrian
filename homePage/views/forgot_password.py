@@ -21,5 +21,4 @@ class ForgotPassForm(forms.Form):
 
   def clean(self):
     email = self.cleaned_data['email'].lower()
-    print(uName)
     return self.cleaned_data
