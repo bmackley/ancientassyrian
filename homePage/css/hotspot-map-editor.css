@@ -99,7 +99,7 @@
 	cursor: pointer;	
 }
 
-/*.hb-move-handle THIS IS THE OLD MOVE HANDLE{*/
+/*.hb-move-handle THIS IS THE OLD MOVE HANDLE{
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -169,7 +169,7 @@ h2 { font-size: 14px; line-height: 18px; }
 	display: block;
 	color: white;
 	font: 11px/18px helvetica, tahoma, sans-serif;
-	padding: 5	px;
+	padding: 5px;
 	position: relative;
 	min-height: 18px;
 	border-radius: 3px;
@@ -342,7 +342,7 @@ h2 { font-size: 14px; line-height: 18px; }
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
-	user-select: none;
+	-user-select: none;
 	width: 150px;
 }
 .ndd-button-green-regular:hover:before {

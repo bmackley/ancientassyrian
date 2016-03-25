@@ -635,49 +635,6 @@
 			//create list of old hotspots not to be added to database
 		});
 	}
-
-	function submitForm() {
-		//variables
-		var username = $('#shell').data('username'); var is_old = false;
-		for(var i = 0; i < spots.length; i++){
-			if(spots[i] != null){
-				for(var j = 0; j < old_spots.length; j++){
-					if(spots[i].id == old_spots[j].id){
-						is_old = true
-					}
-				}//for old_spots
-				if(is_old == true){
-
-				}else{
-					$.ajax({
-						url: '/homePage/hotspot_ajax_form/' + 'new' + '/' + spots[i].x + '/' + Math.floor(spots[i].y) + '/' + spots[i].height + '/' + spots[i].width + '/' + username,
-						type: 'POST',
-						data: {
-							"x": spots[i].x,
-							"y": spots[i].y,
-						},
-						success: function(data){
-						 	console.log(spots[i-1])
-						 	spots[i-1].database_id = data.id;
-						 	old_spots.push(spots[i-1]);
-						 	matchID = data.id;
-						 	for(var q=0; q< old_spots.length; q++){
-						 		console.log(old_spots[q])
-						 	}
-						 	$('.success').val(data)
-						 	//dont add new spots again
-						 },
-						 error: function(err){
-						 	alert(err)
-						 	console.log('Error');
-						 	console.log(err);
-						 }//error
-					});//ajax
-				}//old_spot for
-			}
-		is_old = false
-		}//for
-	}//function
 	function updateHotspot() {
 		console.log('update Hotspot')
 		var username = $('#shell').data('username'); var is_old = false;
@@ -692,26 +649,6 @@
 					// console.log('Old Spot')
 					//console.log('Old SPots id: ' + old_spots[i].id + "   Old Spots x "  + old_spots[i].x + "  Old Spots y " + old_spots[i].y + "   Old Spots width "  + old_spots[i].width + "  Old Spots height " + old_spots[i].height);
 					// console.log("SPots id: " + spots[i].id + "  Spots x " + spots[i].x + "  Spots y " + spots[i].y + "  Spots width " + spots[i].width + "  Spots height " + spots[i].height);
-					if(spots[i].x != old_spots[i].x || spots[i].y != old_spots[i].y || spots[i].width != old_spots[i].width || spots[i].height != old_spots[i].height){
-						$.ajax({
-							url: '/homePage/hotspot_ajax_form/' + 'update' + '/' + spots[i].x + '/' + spots[i].y + '/' + spots[i].height + '/' + spots[i].width + '/' + username + '/' + spots[i].database_id,
-							async: false,
-							success: function(data){
-							 	console.log('Update success');
-							 	$('.success').val(data)
-							 	//update old spot
-							 	old_spots[i].x = spots[i].x;
-							 	old_spots[i].y = spots[i].y;
-							 	old_spots[i].width = spots[i].width;
-							 	old_spots[i].height = spots[i].height;
-
-							 },
-							 error: function(err){
-							 	console.log('Error');
-							 	console.log(err);
-							 }//error
-						});//ajax
-					}
 				}//elseif
 			}
 		}
@@ -724,19 +661,6 @@
 					if (selectedSpot) {
 						if(selectedSpot.id == spots[i].id){
 							var deleted_spot_id = Math.floor(spots[i].database_id)
-							$.ajax({
-								url: '/homePage/hotspot_delete/' + deleted_spot_id,
-								type: 'POST',
-								success: function(data){
-								 	console.log('success');
-								 	$('.success').val(data)
-								 	//dont add new spots again
-								 },
-								 error: function(err){
-								 	alert(err)
-								 	console.log('Error');
-								 }//error
-							});//ajax
 							selectedSpot.del();
 						}//if
 					}//if (selectedSpot)	
@@ -814,47 +738,7 @@
 				spots.push(targetObj);
 				//old_spots.push(targetObj);
 				new_old_spot = new NewOldSpot(targetObj.id, targetObj.x, targetObj.y, targetObj.width, targetObj.height);
-				//old_spots.push(new_old_spot);
-				console.log("Old Spot ID" + new_old_spot.id)
-				//old_spots.push(new_old_spot);
-				//$('.hb-scale-handle, .hb-move-handle, .hb-spot, .hb-spot-object').off('.hb');
 				var username = $('#shell').data('username'); var is_old = false;
-				for(var i = 0; i < spots.length; i++){
-					if(spots[i] != null){
-						for(var j = 0; j < old_spots.length; j++){
-							if(spots[i].id == old_spots[j].id){
-								is_old = true
-							}
-						}//for old_spots
-						if(is_old != true){
-							console.log('These are the numbers' + spots[i].x + '/' + Math.abs(Math.floor(spots[i].y)) + '/' + spots[i].height + '/' + spots[i].width + '/' + username + '/' + Math.floor($(ui.draggable)[0].dataset.sign))
-							$.ajax({
-								url: '/homePage/hotspot_ajax_form/' + 'new' + '/' + spots[i].x + '/' + Math.abs(Math.floor(spots[i].y)) + '/' + spots[i].height + '/' + spots[i].width + '/' + username + '/' + Math.floor($(ui.draggable)[0].dataset.sign),
-								type: 'POST',
-								data: {
-									"x": spots[i].x,
-									"y": spots[i].y,
-								},
-								async: false,
-								success: function(data){
-									console.log(data.id)
-									spots[i].database_id = data.id
-									//has to be the new_old_spot here
-								 	old_spots.push(new_old_spot);
-								 	$('.success').val(data);
-								 	console.log('success');
-								 	//match the characters
-								 },
-								 error: function(err){
-								 	alert(spots[i])
-								 	console.log('Error');
-								 	console.log(err);
-								 }//error
-							});//ajax
-						}//old_spot if
-					}
-				is_old = false
-				}//for
 
 				dynamic_events();
 				//new_match = $("#hb-spot-" + targetObj.id)

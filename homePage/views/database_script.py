@@ -1435,7 +1435,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 2
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 2
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1447,7 +1447,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 3
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 3
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1459,7 +1459,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 4
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 4
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1471,7 +1471,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 5
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 5
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1495,7 +1495,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 7
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 2
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1507,7 +1507,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 8
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 3
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1519,7 +1519,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 9
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 4
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1531,7 +1531,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 10
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 5
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Sign = sign
   new_char.note = "60a955c2-d106-4fda-866e-73499205842f"
@@ -1542,7 +1542,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 11
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 6
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1554,7 +1554,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 12
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 7
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1578,7 +1578,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 14
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 2
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1590,7 +1590,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 15
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 3
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1602,7 +1602,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 16
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 4
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1626,7 +1626,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 18
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 2
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1638,7 +1638,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 19
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 3
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1650,7 +1650,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 20
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 4
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1662,7 +1662,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 21
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 5
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1674,7 +1674,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 22
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 6
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1698,7 +1698,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 24
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 2
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1710,7 +1710,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 25
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 3
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1722,7 +1722,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 26
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 4
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1746,7 +1746,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 28
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 2
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1758,7 +1758,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 29
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 3
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1770,7 +1770,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 30
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 4
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1782,7 +1782,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 31
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 5
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1794,7 +1794,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 32
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 6
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1818,7 +1818,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 34
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 2
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1830,7 +1830,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 35
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 3
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1842,7 +1842,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 36
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 4
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1866,7 +1866,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 38
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 2
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1878,7 +1878,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 39
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 3
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1890,7 +1890,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 40
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 4
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1914,7 +1914,7 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 42
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 2
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
@@ -1926,13 +1926,12 @@ def process_request(request):
   new_char = m.AssyrianChar()
   new_char.id = 43
   new_char.line = line
-  new_char.positionNO = 1
+  new_char.positionNO = 3
   tablet = m.Tablet.objects.get(name = 'KUG03-obv-01')
   new_char.Tablet = tablet
   new_char.Sign = sign
   new_char.note = "43be12c1-7216-421c-8161-2b13cf348835"
   new_char.save()
-
 
   tvars = {
   }

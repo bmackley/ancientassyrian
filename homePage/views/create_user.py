@@ -20,8 +20,6 @@ def process_request(request):
         createForm = CreateUserForm(request.POST)
         if createForm.is_valid():
             newUser = m.User()
-            print(createForm.cleaned_data['username'])
-            print(createForm.cleaned_data['username'].lower())
             newUser.username = createForm.cleaned_data['username'].lower()
             newUser.email = createForm.cleaned_data['email']
             newUser.set_password(createForm.cleaned_data['password'])
